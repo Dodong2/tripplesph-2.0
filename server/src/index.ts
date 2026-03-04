@@ -21,7 +21,7 @@ redis.get("test_key").then((value) => {
     console.log("✅ Redis connected:", value)
 })
 
-
+// postgres testing connection
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
