@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "module": "NodeNext",        // ← baguhin
+    "moduleResolution": "NodeNext", // ← baguhin (hindi na "Node")
     "outDir": "./dist",
-    "rootDir": "./", // changed from ./src
+    "rootDir": "./src",          // ← ibalik sa ./src
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
