@@ -1,61 +1,92 @@
-# ==========================================
-# docker linux mint commands
-# ==========================================
-# for docker status checking
+# Docker + Prisma 7 Reference (PERN Stack)
+
+---
+
+## 🐳 Docker — Linux Mint
+
+### Service Management
+
+```bash
+# Check status
 sudo systemctl status docker
-# for starting docker
+
+# Start / Stop
 sudo systemctl start docker
-# for enable docker to start on boot
-sudo systemctl enable docker
-# for stop docker
 sudo systemctl stop docker
-# for disable docker boot
+
+# Enable / Disable on boot
+sudo systemctl enable docker
 sudo systemctl disable docker
+```
 
+### Compose
 
-# Prisma 7 Setup (PERN Stack - ESM)
+```bash
+docker compose down
+```
 
-# install prisma
+---
+
+## 🔷 Prisma 7 Setup (ESM)
+
+### Installation
+
+```bash
 npm install prisma --save-dev
 npm install @prisma/client
 npm install @prisma/adapter-pg
+```
 
-# initialize prisma (generates prisma/schema.prisma and prisma.config.ts)
+### Initialize
+
+```bash
+# Generates prisma/schema.prisma and prisma.config.ts
 npx prisma init
+```
 
-# generate prisma client (run this every time you change schema.prisma)
+### Generate & Migrate
+
+```bash
+# Generate Prisma Client (run every time schema.prisma changes)
 npx prisma generate
 
-# create and apply migration
+# Create and apply initial migration
 npx prisma migrate dev --name init
+```
 
-# open prisma studio (database GUI at http://localhost:5555)
+### Prisma Studio
+
+```bash
+# Opens database GUI at http://localhost:5555
 npx prisma studio
+```
 
-docker compose down
+---
 
-# ==========================================
-# PRISMA - ADDING A NEW MODEL/SCHEMA
-# ==========================================
+## ➕ Adding a New Model / Schema
 
-# after editing prisma/schema.prisma, run:
+After editing `prisma/schema.prisma`, run in order:
 
-# 1. create and apply migration to database
+```bash
+# 1. Create and apply migration
 npx prisma migrate dev --name add_your_model_name_here
-# example: npx prisma migrate dev --name add_users_table
+# e.g. npx prisma migrate dev --name add_users_table
 
-# 2. generate updated prisma client (required in prisma 7)
+# 2. Regenerate Prisma Client (required in Prisma 7)
 npx prisma generate
 
-# 3. restart the dev server to apply new types
-# Ctrl + C then npm run dev
+# 3. Restart dev server
+# Ctrl+C → npm run dev
+```
 
-# ==========================================
-# PRISMA - OTHER USEFUL COMMANDS
-# ==========================================
+---
 
-# open prisma studio (database GUI at http://localhost:5555)
+## 🛠️ Other Useful Prisma Commands
+
+```bash
+# Open Prisma Studio (database GUI at http://localhost:5555)
 npx prisma studio
 
-# push schema changes without creating a migration (for quick prototyping only)
+# Push schema changes without a migration (quick prototyping only)
 npx prisma db push
+```
