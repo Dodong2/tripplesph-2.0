@@ -1,5 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import cors from 'cors'
 
 dotenv.config()
 
@@ -11,6 +12,14 @@ const app = express()
 const PORT = process.env.PORT || 3001
 
 app.use(express.json())
+
+// CORS
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}))
 
 // Routes
 app.use('/api/auth', authRouter)
