@@ -28,6 +28,7 @@ model User {
   updatedAt DateTime @updatedAt
   sessions Session[]
   accounts Account[]
+  article Article[]
 }
 
 model Session {
@@ -70,3 +71,26 @@ model Verification {
 
   @@unique([identifier, value])
 }
+
+
+model Article {
+  id String @id @default(cuid())
+  title String
+  subtitle String?
+  content String
+  status  ArticleStatus @default(DRAFT)
+  scheduledAt DateTime?
+  publishedAt DateTime?
+  authorId String
+  author User @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+}
+
