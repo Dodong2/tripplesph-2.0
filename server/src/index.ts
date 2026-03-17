@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import { globalErrorHandler } from './middleware/error.middleware.js'
+import articleRouter from './routes/article.route.js'
 
 dotenv.config()
 
@@ -24,6 +25,7 @@ app.use(cors({
 
 // Routes
 app.use('/api/auth', authRouter)
+app.use('api/articles', articleRouter)
 
 app.get('/', (_req, res) => {
   res.json({ message: 'TriPPLesPH API running' })

@@ -1,8 +1,9 @@
-import { Request, Response, NextFunction } from "express"
+import { Request, Response, NextFunction } from 'express'
+import { ParamsDictionary } from 'express-serve-static-core'
 import prisma from "../db/prisma.js"
 import { NotFoundError, ForbiddenError } from "../errors/HttpErrors.js"
 
-interface IParams {
+interface IParams extends ParamsDictionary {
     id: string
 }
 
@@ -38,7 +39,7 @@ export const getArticles = async (req: Request, res: Response, next: NextFunctio
 // Public — DRAFT/SCHEDULED requires login (writer/admin/super_admin)
 export const getArticle = async (req: Request<IParams>, res: Response, next: NextFunction) => {
     try {
-        const { id }: IParams = req.params
+        const { id } = req.params
         
         const article = await prisma.article.findUnique({
             where: { id },
@@ -80,7 +81,7 @@ export const createArticle = async (req: Request, res: Response, next: NextFunct
             }
         })
 
-        res.status(400).json(article)
+        res.status(201).json(article)
     } catch(err) {
         next(err)
     }
@@ -90,7 +91,7 @@ export const createArticle = async (req: Request, res: Response, next: NextFunct
 // Writer — sariling article lang | Admin/super_admin — lahat
 export const updateArticle = async (req: Request<IParams>, res: Response, next: NextFunction) => {
     try {
-        const { id }: IParams = req.params
+        const { id } = req.params
         const { title, subtitle, content, status, scheduleAt } = req.body
         const role = req.user!.role as string
 
@@ -119,8 +120,7 @@ export const updateArticle = async (req: Request<IParams>, res: Response, next: 
 
         res.json(updated)
     } catch(err) {
-        console.error('cannot update article!', err)
-        res.status(500).json({ message: 'Server error!' })
+        next(err)
     }
 }
 
@@ -128,7 +128,7 @@ export const updateArticle = async (req: Request<IParams>, res: Response, next: 
 // Admin/super_admin only
 export const deleteArticle = async(req: Request<IParams>, res: Response, next: NextFunction) => {
    try {
-    const { id }: IParams = req.params
+    const { id } = req.params
     const article = await prisma.article.findUnique({
         where: { id }
     })
