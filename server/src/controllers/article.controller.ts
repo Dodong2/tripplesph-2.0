@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { ParamsDictionary } from 'express-serve-static-core'
 import prisma from "../db/prisma.js"
 import { NotFoundError, ForbiddenError } from "../errors/HttpErrors.js"
+import { clearCache } from '../middleware/cache.middleware.js'
 
 interface IParams extends ParamsDictionary {
     id: string
@@ -98,6 +99,8 @@ export const createArticle = async (req: Request, res: Response, next: NextFunct
             }
         })
 
+        await clearCache('articles')
+
         res.status(201).json(article)
     } catch(err) {
         next(err)
@@ -136,6 +139,8 @@ export const updateArticle = async (req: Request<IParams>, res: Response, next: 
             }
         })
 
+        await clearCache('articles')
+
         res.status(200).json(updated)
     } catch(err) {
         next(err)
@@ -154,6 +159,8 @@ export const deleteArticle = async(req: Request<IParams>, res: Response, next: N
     if(!article) throw new NotFoundError('Article not found')
 
     await prisma.article.delete({ where: { id } })
+
+    await clearCache('articles')
         
     res.status(200).json({ message: 'Article deleted' })
    } catch(err) {

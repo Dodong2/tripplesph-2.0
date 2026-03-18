@@ -8,11 +8,12 @@ import {
     deleteArticle,
     getMyArticles
  } from "../controllers/article.controller.js";
+ import { cacheMiddleware } from "../middleware/cache.middleware.js";
 
  const router = Router()
 
  // ── PUBLIC ────────────────────────────────────────────
- router.get("/", getArticles)
+ router.get("/", cacheMiddleware('articles', 300), getArticles)
 
  // ── WRITER + ABOVE ────────────────────────────────────
  router.get("/my/articles", 
@@ -22,7 +23,7 @@ import {
 
 
  // ── PUBLIC ────────────────────────────────────────────
- router.get("/:id", getArticle)
+ router.get("/:id", cacheMiddleware('articles', 300), getArticle)
  
 
  // ── WRITER + ABOVE ────────────────────────────────────
