@@ -8,11 +8,14 @@ interface IParams extends ParamsDictionary {
 }
 
 
-// GET /api/articles
-// Public — returns all PUBLISHED articles (for blog listing page)
+// GET /api/articles?cursor=clx123abc&limit=10
+// Public — returns PUBLISHED articles with cursor-based pagination (load more)
 export const getArticles = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const article = await prisma.article.findMany({
+        const limit = parseInt(req.query.limit as string) || 10
+        const cursor = req.query.cursor as string | undefined
+
+        const articles = await prisma.article.findMany({
             where: { status: "PUBLISHED" },
             select: {
                 id: true,
@@ -27,10 +30,23 @@ export const getArticles = async (req: Request, res: Response, next: NextFunctio
                     }
                 }
             },
-            orderBy: { publishedAt: "desc" }
+            orderBy: { publishedAt: "desc" },
+            take: limit + 1,
+            ...(cursor && {
+                cursor: { id: cursor },
+                skip: 1
+            })
         })
 
-        res.status(200).json(article)
+        const hasMore = articles.length > limit
+        const data = hasMore ? articles.slice(0, limit) : articles
+        const nextCursor = hasMore ? data[data.length - 1].id : null
+
+        res.status(200).json({
+            data,
+            nextCursor,
+            hasMore
+        })
     } catch(err) {
             next(err)
         }
