@@ -4,6 +4,7 @@ import prisma from "../db/prisma.js"
 import { NotFoundError, ForbiddenError } from "../errors/HttpErrors.js"
 import { clearCache } from '../middleware/cache.middleware.js'
 import { Tag } from '../generated/prisma/enums.js'
+import { testUtils } from 'better-auth/plugins'
 
 interface IParams extends ParamsDictionary {
     id: string
@@ -124,6 +125,7 @@ export const createArticle = async (req: Request, res: Response, next: NextFunct
 
         await clearCache('articles')
         await clearCache('search')
+        await clearCache('related')
 
         res.status(201).json(article)
     } catch(err) {
@@ -174,6 +176,7 @@ export const updateArticle = async (req: Request<IParams>, res: Response, next: 
 
         await clearCache('articles')
         await clearCache('search')
+        await clearCache('related')
 
         res.status(200).json(updated)
     } catch(err) {
@@ -196,6 +199,7 @@ export const deleteArticle = async(req: Request<IParams>, res: Response, next: N
 
     await clearCache('articles')
     await clearCache('search')
+    await clearCache('related')
         
     res.status(200).json({ message: 'Article deleted' })
    } catch(err) {
@@ -300,6 +304,57 @@ export const searchArticles = async (req: Request, res: Response, next: NextFunc
             const nextCursor = hasMore ? data[data.length - 1].id : null
 
             res.status(200).json({ data, nextCursor, hasMore })
+    } catch(err) {
+        next(err)
+    }
+}
+
+// GET /api/articles/:id/related
+// Public — returns 3 related articles based on same tags
+export const getRelatedArticles = async (req: Request<IParams>, res: Response, next: NextFunction) => {
+    try {
+            const { id } = req.params
+
+            const currentArticle = await prisma.article.findUnique({
+                where: { id },
+                select: {
+                    tags: { select: { tag: true } }
+                }
+            })
+
+            if(!currentArticle) throw new NotFoundError('Article not found')
+
+            const currentTags = currentArticle.tags.map(t => t.tag)
+
+            if(currentTags.length === 0) {
+                return res.status(200).json({ data: [] })
+            }
+
+            const related = await prisma.article.findMany({
+                where: {
+                    status: 'PUBLISHED',
+                    id: { not: id },
+                    tags: {
+                        some: {
+                            tag: { in: currentTags }
+                        }
+                    }
+                },
+                select: {
+                    id: true,
+                    title: true,
+                    subtitle: true,
+                    publishedAt: true,
+                    tags: { select: { tag: true } },
+                    author: {
+                        select: { name: true, image: true }
+                    }
+                },
+                orderBy: { publishedAt: 'desc' },
+                take: 3
+            })
+
+            res.status(200).json({ data: related })
     } catch(err) {
         next(err)
     }
