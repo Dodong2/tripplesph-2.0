@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./components/ProtectedRoute"
+import RoleDirect from "./components/RoleRedirect"
 import Home from "./pages/Home"
-import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
-import UserManagement from "./pages/UserManagement"
+import WriterDashboard from "./pages/WriterDashboard"
 import Unauthorized from "./pages/Unauthorized"
 
 function App() {
@@ -12,20 +12,22 @@ function App() {
       <Routes>
         {/* ── PUBLIC ───────────────────────────────── */}
         <Route path="/" element={<Home/>}/>
-        <Route path="/manage" element={<Login/>}/>
         <Route path="/unauthorized" element={<Unauthorized/>}/>
 
-        {/* ── WRITER + ABOVE ────────────────────────── */}
-        <Route path="/dashboard" element={
-          <ProtectedRoute allowedRoles={["writer", "admin", "super_admin"]}>
-            <Dashboard/>
+        {/* ── AUTO REDIRECT after login ─────────── */}
+        <Route path='/redirect' element={<RoleDirect/>}/>
+
+        {/* ── WRITER ONLY ──────────────────────────────── */}
+        <Route path="/writer" element={
+          <ProtectedRoute allowedRoles={["writer"]}>
+            <WriterDashboard/>
           </ProtectedRoute>
         }/>
 
         {/* ── ADMIN + ABOVE ─────────────────────────── */}
-        <Route path="/dashboard/users" element={
+        <Route path="/admin" element={
           <ProtectedRoute allowedRoles={["admin", "super_admin"]}>
-            <UserManagement/>
+            <Dashboard/>
           </ProtectedRoute>
         } />
 
