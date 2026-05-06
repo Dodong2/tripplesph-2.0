@@ -1,5 +1,5 @@
 import CTABanner from "../components/CTABanner";
-import { SERVICE_BLOCKS, ADDITIONAL_SERVICES,} from "../data";
+import { SERVICE_BLOCKS, ADDITIONAL_SERVICES,} from "../data/service";
 import { CircleCheckBig } from "lucide-react";
 
 // ── Target icon (SVG) ────────────────────────────────────────────────────────

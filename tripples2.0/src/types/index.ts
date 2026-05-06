@@ -1,3 +1,5 @@
+import type { LucideIcon } from "lucide-react";
+
 // ─── Navigation ─────────────────────────────────────────────────────────────
 export type PageId = "home" | "services" | "about" | "blog" | "contacts";
 
@@ -16,14 +18,14 @@ export interface StatCard {
 
 export interface ImpactStat {
   id: string;
-  icon: string;
+  icon: LucideIcon;
   value: string;
   label: string;
 }
 
 export interface WhyUsCard {
   id: string;
-  icon: string;
+  icon: LucideIcon;
   title: string;
   description: string;
 }

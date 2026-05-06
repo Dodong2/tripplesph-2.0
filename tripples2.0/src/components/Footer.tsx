@@ -13,7 +13,7 @@ export default function Footer() {
           ))}
         </div>
         <hr className="border-gray-200 mb-4" />
-        <p className="font-['Inter'] text-sm text-gray-700">© 2020 TripplesPH. All rights reserved.</p>
+        <p className="font-['Inter'] text-sm text-gray-700 text-center">© 2026 TripplesPH. All rights reserved.</p>
       </div>
     </footer>
   );

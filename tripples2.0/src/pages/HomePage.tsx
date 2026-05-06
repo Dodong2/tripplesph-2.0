@@ -10,7 +10,7 @@ import {
   CLIENT_LOGOS,
   ARTICLES,
   FAQS,
-} from "../data";
+} from "../data/home";
 
 // ── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
@@ -70,15 +70,18 @@ function Impact() {
     <section className="bg-gradient-to-r from-[#77bbcb] via-[#f4feff] to-[#76baca] py-16 px-6 text-center">
       <h2 className="font-['Poppins'] font-bold text-[28px] sm:text-[44px] text-black mb-10 leading-tight">Our Impact... in Numbers</h2>
       <div className="flex flex-wrap justify-center gap-4 max-w-[1400px] mx-auto mb-10">
-        {IMPACT_STATS.map((s) => (
+        {IMPACT_STATS.map((s) => {
+          const Icon = s.icon;
+          return (
           <div key={s.id} className="bg-white border-2 border-[#197996] rounded-xl shadow-md p-6 flex-1 min-w-[160px] max-w-[240px] text-center">
             <div className="w-12 h-12 rounded-[10px] bg-gradient-to-br from-[#0d9488] via-[#0891b2] to-[#06b6d4] mx-auto mb-2.5 flex items-center justify-center text-xl">
-              {s.icon}
+              <Icon className="w-6 h-6 text-white" />
             </div>
             <p className="font-['Poppins'] font-bold text-3xl text-black">{s.value}</p>
             <p className="font-['Inter'] text-sm text-black mt-1">{s.label}</p>
           </div>
-        ))}
+        )
+})}
       </div>
       <a
         href="#"
@@ -105,15 +108,17 @@ function WhyUs() {
         We're not another agency making promises. Here's what actually sets us apart.
       </p>
       <div className="flex flex-wrap justify-center gap-6 max-w-[1400px] mx-auto">
-        {WHY_US_CARDS.map((c) => (
+        {WHY_US_CARDS.map((c) => {
+          const Icon = c.icon;
+          return (
           <article key={c.id} className="bg-white border-2 border-[#53eafd] rounded-xl shadow-md p-8 flex-1 min-w-[220px] max-w-[320px] text-left">
             <div className="w-[60px] h-[60px] bg-gradient-to-br from-[#0d9488] via-[#0891b2] to-[#06b6d4] rounded-[10px] mb-3.5 flex items-center justify-center text-2xl">
-              {c.icon}
+              <Icon className="w-6 h-6 text-white" />
             </div>
             <h3 className="font-['Poppins'] font-semibold text-base mb-2">{c.title}</h3>
             <p className="font-['Inter'] text-sm leading-relaxed text-gray-700">{c.description}</p>
           </article>
-        ))}
+        )})}
       </div>
     </section>
   );
