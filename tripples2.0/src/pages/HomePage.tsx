@@ -11,34 +11,38 @@ import {
   ARTICLES,
   FAQS,
 } from "../data/home";
+import { RippleBackgroundWhite } from "../components/RippleBackgroundWhite";
 
 // ── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
   return (
-    <section className="bg-[#197996] min-h-[640px] flex items-center justify-center text-center px-6">
-      <div className="py-20 max-w-5xl w-full">
-        <h1 className="font-['Poppins'] font-bold text-3xl sm:text-4xl md:text-[56px] lg:text-[70px] text-white leading-tight mb-7">
-          Philippines' Digital Marketing Company that Creates Positive RIPPLE Effects.
-        </h1>
-        <p className="font-['Inter'] text-lg sm:text-xl md:text-[30px] text-white max-w-3xl mx-auto mb-12 leading-relaxed">
-          It is where the HEARTS of Brands and other Organizations are CONNECTED with their Target Audiences.
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-4">
-          <a
-            href="#"
-            className="bg-[#fffafa] rounded-full h-[58px] px-8 flex items-center font-['Nunito'] font-medium text-xl text-[#0891b2] whitespace-nowrap hover:opacity-90 transition-opacity"
-          >
-            Explore Services →
-          </a>
-          <a
-            href="#"
-            className="border border-white rounded-full h-[58px] px-8 flex items-center font-['Nunito'] font-medium text-xl text-white hover:bg-white/10 transition-colors"
-          >
-            Get Started
-          </a>
+    <RippleBackgroundWhite rippleOriginY={85} rippleCount={5} animationDuration={5} className="my-section">
+      <section className="min-h-[400px] flex items-center justify-center text-center overflow-hidden">
+        <div className="py-20 max-w-5xl w-full">
+          <h1 className="font-['Poppins'] font-bold text-3xl sm:text-4xl md:text-[56px] lg:text-[70px] text-white leading-tight mb-7">
+            Philippines' Digital Marketing Company that Creates Positive RIPPLE Effects.
+          </h1>
+          <p className="font-['Inter'] text-lg sm:text-xl md:text-[30px] text-white max-w-3xl mx-auto mb-12 leading-relaxed">
+            It is where the HEARTS of Brands and other Organizations are CONNECTED with their Target Audiences.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <a
+              href="#"
+              className="bg-[#fffafa] rounded-full h-[58px] px-8 flex items-center font-['Nunito'] font-medium text-xl text-[#0891b2] whitespace-nowrap hover:opacity-90 transition-opacity"
+            >
+              Explore Services →
+            </a>
+            <a
+              href="#"
+              className="border border-white rounded-full h-[58px] px-8 flex items-center font-['Nunito'] font-medium text-xl text-white hover:bg-white/10 transition-colors"
+            >
+              Get Started
+            </a>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </RippleBackgroundWhite>
+
   );
 }
 
@@ -73,15 +77,15 @@ function Impact() {
         {IMPACT_STATS.map((s) => {
           const Icon = s.icon;
           return (
-          <div key={s.id} className="bg-white border-2 border-[#197996] rounded-xl shadow-md p-6 flex-1 min-w-[160px] max-w-[240px] text-center">
-            <div className="w-12 h-12 rounded-[10px] bg-gradient-to-br from-[#0d9488] via-[#0891b2] to-[#06b6d4] mx-auto mb-2.5 flex items-center justify-center text-xl">
-              <Icon className="w-6 h-6 text-white" />
+            <div key={s.id} className="bg-white border-2 border-[#197996] rounded-xl shadow-md p-6 flex-1 min-w-[160px] max-w-[240px] text-center">
+              <div className="w-12 h-12 rounded-[10px] bg-gradient-to-br from-[#0d9488] via-[#0891b2] to-[#06b6d4] mx-auto mb-2.5 flex items-center justify-center text-xl">
+                <Icon className="w-6 h-6 text-white" />
+              </div>
+              <p className="font-['Poppins'] font-bold text-3xl text-black">{s.value}</p>
+              <p className="font-['Inter'] text-sm text-black mt-1">{s.label}</p>
             </div>
-            <p className="font-['Poppins'] font-bold text-3xl text-black">{s.value}</p>
-            <p className="font-['Inter'] text-sm text-black mt-1">{s.label}</p>
-          </div>
-        )
-})}
+          )
+        })}
       </div>
       <a
         href="#"
@@ -111,14 +115,15 @@ function WhyUs() {
         {WHY_US_CARDS.map((c) => {
           const Icon = c.icon;
           return (
-          <article key={c.id} className="bg-white border-2 border-[#53eafd] rounded-xl shadow-md p-8 flex-1 min-w-[220px] max-w-[320px] text-left">
-            <div className="w-[60px] h-[60px] bg-gradient-to-br from-[#0d9488] via-[#0891b2] to-[#06b6d4] rounded-[10px] mb-3.5 flex items-center justify-center text-2xl">
-              <Icon className="w-6 h-6 text-white" />
-            </div>
-            <h3 className="font-['Poppins'] font-semibold text-base mb-2">{c.title}</h3>
-            <p className="font-['Inter'] text-sm leading-relaxed text-gray-700">{c.description}</p>
-          </article>
-        )})}
+            <article key={c.id} className="bg-white border-2 border-[#53eafd] rounded-xl shadow-md p-8 flex-1 min-w-[220px] max-w-[320px] text-left">
+              <div className="w-[60px] h-[60px] bg-gradient-to-br from-[#0d9488] via-[#0891b2] to-[#06b6d4] rounded-[10px] mb-3.5 flex items-center justify-center text-2xl">
+                <Icon className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="font-['Poppins'] font-semibold text-base mb-2">{c.title}</h3>
+              <p className="font-['Inter'] text-sm leading-relaxed text-gray-700">{c.description}</p>
+            </article>
+          )
+        })}
       </div>
     </section>
   );
@@ -302,9 +307,8 @@ function FAQs() {
             <div key={faq.id}>
               <button
                 onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
-                className={`w-full bg-[#d9d9d9] h-[46px] px-4 flex items-center justify-between font-['Poppins'] font-semibold text-sm text-black cursor-pointer border-none text-left transition-all ${
-                  openId === faq.id ? "rounded-t-[6px]" : "rounded-[6px]"
-                }`}
+                className={`w-full bg-[#d9d9d9] h-[46px] px-4 flex items-center justify-between font-['Poppins'] font-semibold text-sm text-black cursor-pointer border-none text-left transition-all ${openId === faq.id ? "rounded-t-[6px]" : "rounded-[6px]"
+                  }`}
               >
                 {faq.question}
                 <span
@@ -315,9 +319,8 @@ function FAQs() {
                 </span>
               </button>
               <div
-                className={`bg-[#989696] rounded-b-[6px] font-['Inter'] text-sm overflow-hidden transition-[max-height,padding] duration-300 ${
-                  openId === faq.id ? "max-h-[200px] px-4 py-3.5" : "max-h-0 px-4 py-0"
-                }`}
+                className={`bg-[#989696] rounded-b-[6px] font-['Inter'] text-sm overflow-hidden transition-[max-height,padding] duration-300 ${openId === faq.id ? "max-h-[200px] px-4 py-3.5" : "max-h-0 px-4 py-0"
+                  }`}
               >
                 {faq.answer}
               </div>

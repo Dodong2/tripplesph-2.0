@@ -77,3 +77,14 @@
 
 /* ── Tailwind (laging HULI) ──────────── */
 @import "tailwindcss";
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}

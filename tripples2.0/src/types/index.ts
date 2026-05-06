@@ -140,6 +140,11 @@ export interface BenefitGroup {
   items: BenefitItem[];
 }
 
+export interface StoryItem {
+  label: string;
+  text: string;
+}
+
 // ─── Footer ──────────────────────────────────────────────────────────────────
 export interface FooterColumn {
   id: string;

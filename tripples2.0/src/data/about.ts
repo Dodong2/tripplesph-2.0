@@ -1,5 +1,5 @@
-import type { Pillar, AwardCard, BenefitGroup } from "../types";
-import { ASSETS } from ".";
+import type { Pillar, AwardCard, BenefitGroup, StoryItem } from "../types";
+import { ASSETS } from "./index";
 
 // ─── About ────────────────────────────────────────────────────────────────────
 export const PILLARS: Pillar[] = [
@@ -55,5 +55,24 @@ export const BENEFIT_GROUPS: BenefitGroup[] = [
       { id: "bi20", iconUrl: "", title: "Prayer Room", description: "You can pray anywhere but we also have a room to just meditate and read" },
       { id: "bi21", iconUrl: "", title: "Weekly Mid-Week Fellowship", description: "We also stop our work midweek to talk about life and our faith walk with God" },
     ],
+  },
+];
+
+export const STORY_CARD_1: StoryItem[] = [
+  {
+    label: "The Pioneers",
+    text: "Mr. Sison and Ms. Sison Soon, joined by friends with skills in front-end development, back-end development, and community management, were the first to nurture our brand.",
+  },
+  {
+    label: "First-Ever Ripple",
+    text: "Before the big waves of an immense client list, we started with small waves — our first client, a photo and video supplies and servicing biz in the Philippines.",
+  },
+  {
+    label: "Innovation",
+    text: "Starting with cost-per-click ads, TRipples became the first and biggest online platform for promoting campaigns effectively.",
+  },
+  {
+    label: "Growth",
+    text: "We then leveraged the pandemic to offer various services and became a one-stop shop for all your digital marketing needs.",
   },
 ];

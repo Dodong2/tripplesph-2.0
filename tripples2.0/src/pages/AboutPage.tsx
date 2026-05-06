@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import CTABanner from "../components/CTABanner";
 import { ASSETS } from "../data";
 import { PILLARS, AWARDS, BENEFIT_GROUPS } from "../data/about";
+import { STORY_CARD_1 } from "../data/about";
 
 // ── About Hero ────────────────────────────────────────────────────────────────
 function AboutHero() {
@@ -27,31 +28,6 @@ function AboutHero() {
     </section>
   );
 }
-
-// ── Story card items data ─────────────────────────────────────────────────────
-interface StoryItem {
-  label: string;
-  text: string;
-}
-
-const STORY_CARD_1: StoryItem[] = [
-  {
-    label: "The Pioneers",
-    text: "Mr. Sison and Ms. Sison Soon, joined by friends with skills in front-end development, back-end development, and community management, were the first to nurture our brand.",
-  },
-  {
-    label: "First-Ever Ripple",
-    text: "Before the big waves of an immense client list, we started with small waves — our first client, a photo and video supplies and servicing biz in the Philippines.",
-  },
-  {
-    label: "Innovation",
-    text: "Starting with cost-per-click ads, TRipples became the first and biggest online platform for promoting campaigns effectively.",
-  },
-  {
-    label: "Growth",
-    text: "We then leveraged the pandemic to offer various services and became a one-stop shop for all your digital marketing needs.",
-  },
-];
 
 // ── Reusable story card ───────────────────────────────────────────────────────
 function StoryCard({ children }: { children: ReactNode }) {
