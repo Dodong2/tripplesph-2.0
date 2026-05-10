@@ -8,7 +8,7 @@ import { STORY_CARD_1 } from "../data/about";
 function AboutHero() {
   return (
     <section
-      className="relative flex flex-col items-center justify-center text-center px-6 pt-12 pb-16 overflow-hidden"
+      className="min-h-screen relative flex flex-col items-center justify-center text-center px-6 pt-12 pb-16 overflow-hidden"
       style={{ background: "linear-gradient(160deg, #b8dce8 0%, #5fb3c8 45%, #2a7f99 100%)" }}
     >
       {/* ── Top text block ── */}
@@ -128,6 +128,167 @@ function HowWeStarted() {
 }
 
 // ── Awards ────────────────────────────────────────────────────────────────────
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+interface AwardCardWideProps {
+  imageUrl: string;
+  title: string;
+  badge?: string;
+  description: string;
+  category?: string;
+  /** "left" = image left, text right | "right" = image right, text left (default) */
+  imagePosition?: "left" | "right";
+  /** extra tailwind col/row classes e.g. "md:col-span-3 md:row-span-2" */
+  gridClass?: string;
+}
+
+interface AwardCardTallProps {
+  imageUrl: string;
+  title: string;
+  badge?: string;
+  description: string;
+  /** extra tailwind col/row classes */
+  gridClass?: string;
+}
+
+// ─── Shared styles ────────────────────────────────────────────────────────────
+
+const cardBg = "linear-gradient(to right, #2f788e, #398ca4)";
+const imageBg: React.CSSProperties = {
+  background: "rgba(81,150,172,0.25)",
+  border: "1px solid #4aabc7",
+};
+
+// ─── AwardCardWide ────────────────────────────────────────────────────────────
+/**
+ * Large horizontal card (col-span-3 style).
+ * Used for featured/primary awards.
+ */
+export const AwardCardWide: React.FC<AwardCardWideProps> = ({
+  imageUrl,
+  title,
+  badge,
+  description,
+  category,
+  imagePosition = "right",
+  gridClass = "md:col-span-3 md:row-span-2",
+}) => {
+  const imageBlock = (
+    <div
+      className={`relative flex-shrink-0 flex items-center justify-center p-5 md:p-6 md:w-[310px] ${
+        imagePosition === "right" ? "order-first md:order-last" : ""
+      }`}
+    >
+      <div
+        className="relative rounded-[17px] flex items-center justify-center w-full md:w-[300px] h-[180px] md:h-[200px]"
+        style={imageBg}
+      >
+        <img
+          src={imageUrl}
+          alt={title}
+          className="object-contain rounded-[8px] max-w-[90%] max-h-[90%]"
+        />
+      </div>
+    </div>
+  );
+
+  const textBlock = (
+    <div className="relative z-10 flex flex-col justify-center p-5 md:p-6 flex-1 min-w-0">
+      <h3 className="font-['Poppins'] font-semibold text-xl md:text-[30px] text-white leading-tight mb-3 md:mb-4">
+        {title}
+      </h3>
+      {badge && (
+        <div className="flex items-center gap-3 mb-4 md:mb-3">
+          <div className="w-[3px] h-[25px] md:h-[36px] bg-[#74bbcb] rounded-full flex-shrink-0" />
+          <p className="font-['Poppins'] font-medium text-base md:text-[20px] text-[#74bbcb]">
+            {badge}
+          </p>
+        </div>
+      )}
+      <p className="font-['Inter'] text-sm md:text-[20px] text-white leading-relaxed mb-5">
+        {description}
+      </p>
+      {category && (
+        <div className="flex items-center gap-2">
+          <div className="w-[10px] h-[10px] md:w-[13px] md:h-[13px] rounded-full bg-white/60 flex-shrink-0" />
+          <p className="font-['Inter'] text-sm md:text-[16px] text-white">{category}</p>
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <div
+      className={`${gridClass} rounded-[24px] overflow-hidden border border-[#4691a7] relative flex flex-col md:flex-row items-stretch`}
+      style={{ background: cardBg }}
+    >
+      {/* Decorative glow */}
+      <div
+        className="absolute w-[279px] h-[278px] top-[-105px] right-[-50px] opacity-30 rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, #5196ac 0%, transparent 70%)" }}
+      />
+      {imagePosition === "right" ? (
+        <>
+          {imageBlock}
+          {textBlock}
+        </>
+      ) : (
+        <>
+          {imageBlock}
+          {textBlock}
+        </>
+      )}
+    </div>
+  );
+};
+
+// ─── AwardCardTall ────────────────────────────────────────────────────────────
+/**
+ * Smaller vertical card (col-span-2 style).
+ * Used for secondary awards.
+ */
+export const AwardCardTall: React.FC<AwardCardTallProps> = ({
+  imageUrl,
+  title,
+  badge,
+  description,
+  gridClass = "md:col-span-2 md:row-span-2",
+}) => {
+  return (
+    <div
+      className={`${gridClass} rounded-3xl overflow-hidden border border-[#4691a7] flex flex-col items-stretch`}
+      style={{ background: "linear-gradient(135deg, #2f788e 0%, #398ca4 100%)" }}
+    >
+      <div className="flex-shrink-0 flex items-center justify-center p-4">
+        <div
+          className="relative rounded-[17px] flex items-center justify-center w-full md:w-[200px] h-[180px] md:h-[200px]"
+          style={imageBg}
+        >
+          <img
+            src={imageUrl}
+            alt={title}
+            className="object-contain rounded-[8px] max-w-[90%] max-h-[90%]"
+          />
+        </div>
+      </div>
+      <div className="p-4 flex flex-col justify-center flex-1 min-w-0">
+        {badge && (
+          <p className="font-['Poppins'] font-medium text-sm text-[#74bbcb] mb-1">{badge}</p>
+        )}
+        <h3 className="font-['Poppins'] font-semibold text-base md:text-lg text-white mb-2 leading-tight">
+          {title}
+        </h3>
+        <p className="font-['Inter'] text-xs md:text-sm text-white leading-relaxed">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+// ─── Awards Section (usage example) ──────────────────────────────────────────
+
 function Awards() {
   return (
     <section className="bg-[#187797] py-16 px-6">
@@ -135,206 +296,68 @@ function Awards() {
         AWARDS & RECOGNITION
       </h2>
       <p className="font-['Inter'] text-center text-lg md:text-xl text-white mb-12 max-w-3xl mx-auto">
-        Our dedication to innovation and exceptional results has earned us prestigious recognition from leading organizations across Asia and beyond.
+        Our dedication to innovation and exceptional results has earned us prestigious recognition
+        from leading organizations across Asia and beyond.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4 max-w-[1400px] mx-auto">
 
-        {/* ── Reusable image frame ── */}
-        {/* Used inline below per card */}
+        {/* Card 1 — wide, image right */}
+        <AwardCardWide
+          gridClass="md:col-span-3 md:row-span-2"
+          imageUrl={AWARDS[0].imageUrl}
+          title={AWARDS[0].title}
+          badge={AWARDS[0].badge}
+          description={AWARDS[0].description}
+          category={AWARDS[0].category}
+          imagePosition="right"
+        />
 
-        {/* Card 1 — full width mobile | col-span-3 desktop | text LEFT, image RIGHT */}
-        {/* Card 1 */}
-        <div
-          className="md:col-span-3 md:row-span-2 rounded-[24px] overflow-hidden border border-[#4691a7] relative
-                  flex flex-col md:flex-row items-stretch"
-          style={{ background: "linear-gradient(to right, #2f788e, #398ca4)" }}
-        >
-          <div className="absolute w-[279px] h-[278px] top-[-105px] right-[-50px] opacity-30 rounded-full pointer-events-none"
-            style={{ background: "radial-gradient(circle, #5196ac 0%, transparent 70%)" }}
-          />
+        {/* Card 2 — tall */}
+        <AwardCardTall
+          gridClass="md:col-span-2 md:row-span-2 md:col-start-4"
+          imageUrl={AWARDS[1].imageUrl}
+          title={AWARDS[1].title}
+          badge={AWARDS[1].badge}
+          description={AWARDS[1].description}
+        />
 
-          {/* Image — top on mobile, right on desktop */}
-          {/* ✅ Same padding as text col: p-5 md:p-6 */}
-          <div className="order-first md:order-last relative flex-shrink-0 flex items-center justify-center p-5 md:p-5 md:w-[310px]">
-            <div
-              className="relative rounded-[17px] flex items-center justify-center w-full md:w-[300px] h-[180px] md:h-[200px]"
-              style={{ background: "rgba(81,150,172,0.25)", border: "1px solid #4aabc7" }}
-            >
-              <img
-                src={AWARDS[0].imageUrl}
-                alt={AWARDS[0].title}
-                className="object-contain rounded-[8px] max-w-[90%] max-h-[90%]"
-              />
-            </div>
-          </div>
+        {/* Card 3 — tall */}
+        <AwardCardTall
+          gridClass="md:col-span-2 md:row-span-2 md:col-start-1"
+          imageUrl={AWARDS[2].imageUrl}
+          title={AWARDS[2].title}
+          badge={AWARDS[2].badge}
+          description={AWARDS[2].description}
+        />
 
-          {/* Text — bottom on mobile, left on desktop */}
-          {/* ✅ Same padding: p-5 md:p-6 */}
-          <div className="relative z-10 flex flex-col justify-center p-5 md:p-6 flex-1 min-w-0">
-            <h3 className="font-['Poppins'] font-semibold text-xl md:text-[30px] text-white leading-tight mb-3 md:mb-4">
-              {AWARDS[0].title}
-            </h3>
-            <div className="flex items-center gap-3 mb-4 md:mb-3">
-              <div className="w-[3px] h-[25px] md:h-[36px] bg-[#74bbcb] rounded-full flex-shrink-0" />
-              {AWARDS[0].badge && (
-                <p className="font-['Poppins'] font-medium text-base md:text-[20px] text-[#74bbcb]">
-                  {AWARDS[0].badge}
-                </p>
-              )}
-            </div>
-            <p className="font-['Inter'] text-sm md:text-[20px] text-white leading-relaxed mb-5">
-              {AWARDS[0].description}
-            </p>
-            {AWARDS[0].category && (
-              <div className="flex items-center gap-2">
-                <div className="w-[10px] h-[10px] md:w-[13px] md:h-[13px] rounded-full bg-white/60 flex-shrink-0" />
-                <p className="font-['Inter'] text-sm md:text-[16px] text-white">{AWARDS[0].category}</p>
-              </div>
-            )}
-          </div>
-        </div>
+        {/* Card 4 — wide, image left */}
+        <AwardCardWide
+          gridClass="md:col-span-3 md:row-span-2 md:col-start-3"
+          imageUrl={AWARDS[3].imageUrl}
+          title={AWARDS[3].title}
+          badge={AWARDS[3].badge}
+          description={AWARDS[3].description}
+          category={AWARDS[3].category}
+          imagePosition="left"
+        />
 
-        {/* Card 2 — col-span-2 desktop */}
-        <div
-          className="md:col-span-2 md:row-span-2 md:col-start-4 rounded-3xl overflow-hidden border border-[#4691a7]
-            flex flex-col items-stretch"
-          style={{ background: "linear-gradient(135deg, #2f788e 0%, #398ca4 100%)" }}
-        >
-          <div className="flex-shrink-0 flex items-center justify-center p-4">
-            <div className="relative rounded-[17px] flex items-center justify-center w-full h-[180px] md:h-[200px]"
-              style={{ background: "rgba(81,150,172,0.25)", border: "1px solid #4aabc7" }}
-            >
-              <img src={AWARDS[1].imageUrl} alt={AWARDS[1].title}
-                className="object-contain rounded-[8px] max-w-[90%] max-h-[90%]" />
-            </div>
-          </div>
-          <div className="p-4 flex flex-col justify-center flex-1 min-w-0">
-            {AWARDS[1].badge && (
-              <p className="font-['Poppins'] font-medium text-sm text-[#74bbcb] mb-1">{AWARDS[1].badge}</p>
-            )}
-            <h3 className="font-['Poppins'] font-semibold text-base md:text-lg text-white mb-2 leading-tight">
-              {AWARDS[1].title}
-            </h3>
-            <p className="font-['Inter'] text-xs md:text-sm text-white leading-relaxed">{AWARDS[1].description}</p>
-          </div>
-        </div>
-
-        {/* Card 3 — col-span-2 row-start-3 desktop */}
-        <div
-          className="md:col-span-2 md:row-span-2 md:col-start-1 rounded-3xl overflow-hidden border border-[#4691a7]
-            flex flex-col items-stretch"
-          style={{ background: "linear-gradient(135deg, #2f788e 0%, #398ca4 100%)" }}
-        >
-          <div className="flex-shrink-0 flex items-center justify-center p-4">
-            <div className="relative rounded-[17px] flex items-center justify-center w-full h-[180px] md:h-[200px]"
-              style={{ background: "rgba(81,150,172,0.25)", border: "1px solid #4aabc7" }}
-            >
-              <img src={AWARDS[2].imageUrl} alt={AWARDS[2].title}
-                className="object-contain rounded-[8px] max-w-[90%] max-h-[90%]" />
-            </div>
-          </div>
-          <div className="p-4 flex flex-col justify-center flex-1 min-w-0">
-            {AWARDS[2].badge && (
-              <p className="font-['Poppins'] font-medium text-sm text-[#74bbcb] mb-1">{AWARDS[2].badge}</p>
-            )}
-            <h3 className="font-['Poppins'] font-semibold text-base md:text-lg text-white mb-2 leading-tight">
-              {AWARDS[2].title}
-            </h3>
-            <p className="font-['Inter'] text-xs md:text-sm text-white leading-relaxed">{AWARDS[2].description}</p>
-          </div>
-        </div>
-
-        {/* Card 4 — col-span-3 col-start-3 row-start-3 desktop | image LEFT, text RIGHT */}
-        <div
-          className="md:col-span-3 md:row-span-2 md:col-start-3 rounded-[24px] overflow-hidden border border-[#4691a7] relative
-            flex flex-col md:flex-row items-stretch"
-          style={{ background: "linear-gradient(to right, #2f788e, #398ca4)" }}
-        >
-          <div className="absolute w-[279px] h-[278px] top-[-105px] right-[-50px] opacity-30 rounded-full pointer-events-none"
-            style={{ background: "radial-gradient(circle, #5196ac 0%, transparent 70%)" }}
-          />
-
-          {/* Image — top on mobile, left on desktop */}
-          <div className="relative flex-shrink-0 flex items-center justify-center p-4 md:p-6 md:w-[310px]">
-            <div className="relative rounded-[17px] flex items-center justify-center w-full md:w-[300px] h-[180px] md:h-[200px]"
-              style={{ background: "rgba(81,150,172,0.25)", border: "1px solid #4aabc7" }}
-            >
-              <img src={AWARDS[3].imageUrl} alt={AWARDS[3].title}
-                className="object-contain rounded-[8px] max-w-[90%] max-h-[90%]" />
-            </div>
-          </div>
-
-          {/* Text */}
-          <div className="relative z-10 flex flex-col justify-center p-5 md:p-[10px] flex-1 min-w-0">
-            <h3 className="font-['Poppins'] font-semibold text-xl md:text-[30px] text-white leading-tight mb-3 md:mb-4 md:w-[298px]">
-              {AWARDS[3].title}
-            </h3>
-            <div className="flex items-center gap-3 mb-4 md:mb-3">
-              <div className="w-[3px] h-[25px] md:h-[36px] bg-[#74bbcb] rounded-full flex-shrink-0" />
-              {AWARDS[3].badge && (
-                <p className="font-['Poppins'] font-medium text-base md:text-[20px] text-[#74bbcb]">
-                  {AWARDS[3].badge}
-                </p>
-              )}
-            </div>
-            <p className="font-['Inter'] text-sm md:text-[20px] text-white leading-relaxed mb-5 md:mb-5">
-              {AWARDS[3].description}
-            </p>
-            {AWARDS[3].category && (
-              <div className="flex items-center gap-2">
-                <div className="w-[10px] h-[10px] md:w-[13px] md:h-[13px] rounded-full bg-white/60 flex-shrink-0" />
-                <p className="font-['Inter'] text-sm md:text-[16px] text-white">{AWARDS[3].category}</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Card 5 — col-span-3 col-start-2 row-start-5 desktop | image LEFT, text RIGHT */}
-        <div
-          className="md:col-span-3 md:row-span-2 md:col-start-2 md:row-start-5 rounded-3xl overflow-hidden border border-[#4691a7]
-            flex flex-col md:flex-row items-stretch"
-          style={{ background: "linear-gradient(135deg, #2f788e 0%, #398ca4 100%)" }}
-        >
-          {/* Image — top on mobile, left on desktop */}
-          <div className="relative flex-shrink-0 flex items-center justify-center p-4 md:p-6 md:w-[310px]">
-            <div className="relative rounded-[17px] flex items-center justify-center w-full md:w-[300px] h-[180px] md:h-[200px]"
-              style={{ background: "rgba(81,150,172,0.25)", border: "1px solid #4aabc7" }}
-            >
-              <img src={AWARDS[4].imageUrl} alt={AWARDS[4].title}
-                className="object-contain rounded-[8px] max-w-[90%] max-h-[90%]" />
-            </div>
-          </div>
-
-          {/* Text */}
-          <div className="relative z-10 flex flex-col justify-center p-5 md:p-[10px] flex-1 min-w-0">
-            <h3 className="font-['Poppins'] font-semibold text-xl md:text-[30px] text-white leading-tight mb-3 md:mb-4 md:w-[298px]">
-              {AWARDS[4].title}
-            </h3>
-            <div className="flex items-center gap-3 mb-4 md:mb-3">
-              <div className="w-[3px] h-[25px] md:h-[36px] bg-[#74bbcb] rounded-full flex-shrink-0" />
-              {AWARDS[4].badge && (
-                <p className="font-['Poppins'] font-medium text-base md:text-[20px] text-[#74bbcb]">
-                  {AWARDS[4].badge}
-                </p>
-              )}
-            </div>
-            <p className="font-['Inter'] text-sm md:text-[20px] text-white leading-relaxed mb-5 md:mb-5">
-              {AWARDS[4].description}
-            </p>
-            {AWARDS[4].category && (
-              <div className="flex items-center gap-2">
-                <div className="w-[10px] h-[10px] md:w-[13px] md:h-[13px] rounded-full bg-white/60 flex-shrink-0" />
-                <p className="font-['Inter'] text-sm md:text-[16px] text-white">{AWARDS[4].category}</p>
-              </div>
-            )}
-          </div>
-        </div>
+        {/* Card 5 — wide, image left */}
+        <AwardCardWide
+          gridClass="md:col-span-3 md:row-span-2 md:col-start-2 md:row-start-5"
+          imageUrl={AWARDS[4].imageUrl}
+          title={AWARDS[4].title}
+          badge={AWARDS[4].badge}
+          description={AWARDS[4].description}
+          category={AWARDS[4].category}
+          imagePosition="left"
+        />
 
       </div>
     </section>
   );
 }
+
 
 
 // ── How We Strive (Triple Bottom Line) ───────────────────────────────────────

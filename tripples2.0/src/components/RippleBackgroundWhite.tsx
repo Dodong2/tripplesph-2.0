@@ -15,7 +15,6 @@ export const RippleBackgroundWhite: React.FC<RippleBackgroundProps> = ({
   rippleCount = 5,
   animationDuration = 5,
   rippleOriginY = 62,
-  nextSectionBg = "#ffffff",
 }) => {
   const ripples = Array.from({ length: rippleCount }, (_, i) => i);
   const totalCycle = animationDuration * rippleCount;
@@ -24,6 +23,7 @@ export const RippleBackgroundWhite: React.FC<RippleBackgroundProps> = ({
   const styles = `
     .ripple-wrapper {
       position: relative;
+      overflow: visible;
       display: flex;
       width: 100%;
       /* overflow visible so the wave SVG can bleed below */
@@ -102,11 +102,11 @@ export const RippleBackgroundWhite: React.FC<RippleBackgroundProps> = ({
     /* Wave sits at the very bottom, on top of everything */
     .ripple-wave {
       position: absolute;
-      bottom: 0;
+      bottom: -1px;
       left: 0;
       width: 100%;
       line-height: 0;
-      z-index: 20;
+      z-index: 5;
       pointer-events: none;
     }
 
@@ -134,13 +134,14 @@ export const RippleBackgroundWhite: React.FC<RippleBackgroundProps> = ({
         {/* Wave — outside the clip container, bleeds below the section */}
         <div className="ripple-wave">
           <svg
-            viewBox="0 0 1440 90"
+            viewBox="0 0 1440 160"
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="none"
+            style={{ width: "100%", height: "auto", display: "block" }}
           >
             <path
-              d="M0,40 C240,85 480,0 720,45 C960,90 1200,5 1440,42 L1440,90 L0,90 Z"
-              fill={nextSectionBg}
+              d="M0,80 C200,160 400,20 600,90 C800,160 1000,30 1200,100 C1300,130 1380,90 1440,70 L1440,160 L0,160 Z"
+              fill="#0d7490"
             />
           </svg>
         </div>

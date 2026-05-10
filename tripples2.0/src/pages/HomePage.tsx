@@ -24,11 +24,10 @@ function Hero() {
       rippleOriginY={70}
       rippleCount={5}
       animationDuration={5}
-      nextSectionBg="#77bbcb"
     >
-      <section className="min-h-[500px] flex items-center justify-center text-center px-6 pb-20 pt-16 w-full">
+      <section className="min-h-screen flex items-center justify-center text-center px-6 pb-20 pt-10 w-full">
         <div className="max-w-2xl w-full mx-auto">
-          <h1 className="font-['Poppins'] font-bold text-[] sm:text-3xl md:text-[30px] text-white leading-tight mb-4">
+          <h1 className="font-['Poppins'] font-bold text-[] sm:text-3xl md:text-[40px] text-white leading-tight mb-4">
             Philippines' Digital Marketing Company that Creates Positive RIPPLE
             Effects.
           </h1>
@@ -51,6 +50,27 @@ function Hero() {
         </div>
       </section>
     </RippleBackgroundWhite>
+  );
+}
+
+// ── Clients ──────────────────────────────────────────────────────────────────
+function Clients() {
+  // Split 30 logos into two rows of 15
+  const row1 = CLIENT_LOGOS.slice(0, 15);
+  const row2 = CLIENT_LOGOS.slice(15, 30);
+
+  return (
+    <section
+      className="py-14 text-center overflow-hidden bg-[#0d7490]"
+      style={{ marginTop: "-2px" }}
+    >
+     
+      <h2 className="font-['Poppins'] font-bold text-[28px] sm:text-[44px] text-white mb-7 leading-tight">
+        Our Clients
+      </h2>
+      <LogoCarousel logos={row1} reverse={false} />
+      <LogoCarousel logos={row2} reverse={true} />
+    </section>
   );
 }
 
@@ -315,28 +335,7 @@ function Testimonials() {
     </section>
   );
 }
-// ── Clients ──────────────────────────────────────────────────────────────────
-function Clients() {
-  // Split 30 logos into two rows of 15
-  const row1 = CLIENT_LOGOS.slice(0, 15);
-  const row2 = CLIENT_LOGOS.slice(15, 30);
 
-  return (
-    <section
-      className="py-14 text-center overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(92.44deg, #74bbcb 0%, #3e9db4 50%, #197896 100%)",
-      }}
-    >
-      <h2 className="font-['Poppins'] font-bold text-[28px] sm:text-[44px] text-white mb-7 leading-tight">
-        Our Clients
-      </h2>
-      <LogoCarousel logos={row1} reverse={false} />
-      <LogoCarousel logos={row2} reverse={true} />
-    </section>
-  );
-}
 
 // ── Articles ─────────────────────────────────────────────────────────────────
 function Articles() {
@@ -389,7 +388,11 @@ function Articles() {
 function FAQs() {
   const [openId, setOpenId] = useState<string | null>(null);
   return (
-    <section className="bg-[#0d7490] py-16 px-6">
+    <section className="bg-[#0d7490]">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
+    </svg>
+    <div className="py-16 px-6">
       <div className="max-w-[1300px] mx-auto flex flex-wrap gap-14 items-start">
         <div className="flex-shrink-0 min-w-[180px]">
           <h2
@@ -433,6 +436,7 @@ function FAQs() {
             </div>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );
