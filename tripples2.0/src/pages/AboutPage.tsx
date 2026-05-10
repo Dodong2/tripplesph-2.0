@@ -452,7 +452,9 @@ function Benefits() {
           <div key={group.id}>
             <h3 className="font-['Poppins'] font-bold text-2xl md:text-[36px] text-white mb-6">{group.groupTitle}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {group.items.map((item) => (
+              {group.items.map((item) => {
+                const Icon = item.icon
+                return (
                 <div
                   key={item.id}
                   className="bg-[#308da7] border border-[#74bbcb] rounded-3xl p-5 flex items-start gap-4"
@@ -460,13 +462,13 @@ function Benefits() {
                   <div
                     className="w-[67px] h-[67px] flex-shrink-0 rounded-xl flex items-center justify-center"
                     style={{ background: "linear-gradient(135deg, #6bb4c5 0%, #49a7af 50%, #28809c 100%)" }}
-                  />
+                  ><Icon size={30} className="text-white"/></div>
                   <div>
                     <h4 className="font-['Poppins'] font-bold text-base md:text-xl text-white leading-tight mb-1">{item.title}</h4>
                     <p className="font-['Inter'] text-sm text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
-              ))}
+              )})}
             </div>
           </div>
         ))}

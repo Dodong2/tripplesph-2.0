@@ -132,7 +132,7 @@ export interface AwardCard {
 
 export interface BenefitItem {
   id: string;
-  iconUrl: string;
+  icon: LucideIcon;
   title: string;
   description: string;
 }
