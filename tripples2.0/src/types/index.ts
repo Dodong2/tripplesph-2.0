@@ -148,6 +148,13 @@ export interface StoryItem {
   text: string;
 }
 
+export interface WhyWeExistItem {
+  id: string
+  icon: LucideIcon
+  title: string
+  description: string
+}
+
 // ─── Contact Page ──────────────────────────────────────────────────────────────
 export interface ContactFaqItem {
   id: string;
@@ -168,3 +175,27 @@ export interface FooterColumn {
   heading: string;
   body: string;
 }
+
+// ─── components types wide and tall ──────────────────────────────────────────────────────────────────
+
+export interface AwardCardWideProps {
+  imageUrl: string;
+  title: string;
+  badge?: string;
+  description: string;
+  category?: string;
+  /** "left" = image left, text right | "right" = image right, text left (default) */
+  imagePosition?: "left" | "right";
+  /** extra tailwind col/row classes e.g. "md:col-span-3 md:row-span-2" */
+  gridClass?: string;
+}
+
+export interface AwardCardTallProps {
+  imageUrl: string;
+  title: string;
+  badge?: string;
+  description: string;
+  /** extra tailwind col/row classes */
+  gridClass?: string;
+}
+

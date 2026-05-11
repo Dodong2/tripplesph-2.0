@@ -1,4 +1,4 @@
-import type { Pillar, AwardCard, BenefitGroup, StoryItem } from "../types";
+import type { Pillar, AwardCard, BenefitGroup, StoryItem, WhyWeExistItem } from "../types";
 import { ASSETS } from "./index";
 import { 
   Award, 
@@ -13,11 +13,13 @@ import {
   Coins, 
   Globe, 
   GraduationCap, 
+  Handshake, 
   Heart, 
   House, 
   Music, 
   PartyPopper, 
   Sofa, 
+  Store, 
   TrendingUp, 
   User, 
   Utensils, 
@@ -102,3 +104,9 @@ export const STORY_CARD_1: StoryItem[] = [
     text: "We then leveraged the pandemic to offer various services and became a one-stop shop for all your digital marketing needs.",
   },
 ];
+
+export const EXIST_ITEM: WhyWeExistItem[] = [
+    { id: "we1", icon: Heart, title: "Humanity", description: "We exist for humanity. We compensate our online community with cash and rewardable gift items, vouchers, and points." },
+    { id: "we2", icon: Store, title: "Brands and SMEs", description: "We exist for brands and SMEs. Understanding what is in their heart, we design, create, and deliver quality services." },
+    { id: "we3", icon: Handshake, title: "Non-profit organizations", description: "We exist for non-profit organizations. We help them promote their advocacies, and it is FREE!" },
+  ];
