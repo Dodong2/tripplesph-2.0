@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CONTACT_FAQS, CONTACT_INFO } from "../data/contact";
 import { DecorativeCircles } from "../components/DecorativeCircles";
+import { useContactForm } from "../hooks/useContactForm";
 
 
 // ── Contact Hero ──────────────────────────────────────────────────────────────
@@ -31,33 +32,13 @@ const SUBJECTS = [
   "Partnership",
   "Other",
 ];
-
-function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-  });
-
-  function handleChange(
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setSubmitted(true);
-  }
-
+ 
+export function ContactForm() {
+  const { formRef, sendMessage, alert, isSubmitting } = useContactForm();
+ 
   const inputClass =
     "w-full h-12 px-4 rounded-lg bg-[#f3f3f5] font-['Inter'] text-base text-gray-700 placeholder-[#939393] outline-none focus:ring-2 focus:ring-[#197996]/40 transition-shadow";
-
+ 
   return (
     <section className="bg-[#EDF9FD] py-16 px-6">
       <div className="max-w-[818px] mx-auto bg-white rounded-[42px] shadow-[0px_4px_16.1px_6px_rgba(0,0,0,0.25)] px-8 sm:px-14 py-12">
@@ -67,8 +48,8 @@ function ContactForm() {
         <p className="font-['Inter'] text-base md:text-lg text-black text-center mb-8">
           Let us work together and make positive ripples!
         </p>
-
-        {submitted ? (
+ 
+        {alert?.type === "success" ? (
           <div className="text-center py-10">
             <p className="font-['Poppins'] font-semibold text-xl text-[#197996] mb-2">
               Message sent! 🎉
@@ -78,46 +59,51 @@ function ContactForm() {
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
+          <form
+            ref={formRef}
+            onSubmit={sendMessage}
+            className="flex flex-col gap-4"
+            noValidate
+          >
+            {/* Error alert */}
+            {alert?.type === "error" && (
+              <p className="font-['Inter'] text-sm text-red-500 text-center">
+                {alert.message}
+              </p>
+            )}
+ 
             {/* Row 1 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
-                name="fullName"
+                name="from_name"       
                 type="text"
                 placeholder="Full Name"
-                value={form.fullName}
-                onChange={handleChange}
                 required
                 className={inputClass}
               />
               <input
-                name="email"
+                name="from_email"      
                 type="email"
                 placeholder="Email Address"
-                value={form.email}
-                onChange={handleChange}
                 required
                 className={inputClass}
               />
             </div>
-
+ 
             {/* Row 2 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
                 name="phone"
                 type="tel"
                 placeholder="Phone Number"
-                value={form.phone}
-                onChange={handleChange}
                 className={inputClass}
               />
               {/* Subject dropdown */}
               <div className="relative">
                 <select
                   name="subject"
-                  value={form.subject}
-                  onChange={handleChange}
                   required
+                  defaultValue=""
                   className={`${inputClass} appearance-none cursor-pointer pr-8`}
                 >
                   <option value="" disabled>
@@ -135,30 +121,34 @@ function ContactForm() {
                   viewBox="0 0 12 8"
                   fill="none"
                 >
-                  <path d="M1 1l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  <path
+                    d="M1 1l5 5 5-5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </div>
             </div>
-
+ 
             {/* Message */}
             <textarea
-              name="message"
+              name="message"       
               placeholder="Write your message here..."
-              value={form.message}
-              onChange={handleChange}
               required
               rows={4}
               className="w-full px-4 py-3 rounded-lg bg-[#f3f3f5] font-['Inter'] text-base text-gray-700 placeholder-[#939393] outline-none focus:ring-2 focus:ring-[#197996]/40 transition-shadow resize-none"
             />
-
+ 
             {/* Submit */}
             <button
               type="submit"
-              className="w-full h-[48px] rounded-lg bg-[#ff6f37] font-['Inter'] font-semibold text-base text-white hover:opacity-90 transition-opacity cursor-pointer border-none"
+              disabled={isSubmitting}
+              className="w-full h-[48px] rounded-lg bg-[#ff6f37] font-['Inter'] font-semibold text-base text-white hover:opacity-90 transition-opacity cursor-pointer border-none disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Submit Message
+              {isSubmitting ? "Sending..." : "Submit Message"}
             </button>
-
+ 
             <p className="font-['Inter'] text-sm text-[#939393] text-center -mt-1">
               Thank you for your query. We will respond to you shortly.
             </p>
@@ -168,6 +158,7 @@ function ContactForm() {
     </section>
   );
 }
+
 
 // ── Contact Info Cards ────────────────────────────────────────────────────────
 function ContactInfoCards() {
