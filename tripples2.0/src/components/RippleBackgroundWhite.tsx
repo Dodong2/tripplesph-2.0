@@ -30,7 +30,7 @@ export const RippleBackgroundWhite: React.FC<RippleBackgroundProps> = ({
       overflow: visible;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(160deg, #b8dce8 0%, #5fb3c8 45%, #2a7f99 100%);
+      background: linear-gradient(160deg, #b8dce8 0%, #5fb3c8 45%,  #b8dce8 100%);
     }
 
     /* Separate clip container so ripple rings are clipped but wave is not */

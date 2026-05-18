@@ -27,11 +27,11 @@ function Hero() {
     >
       <section className="min-h-screen flex items-center justify-center text-center px-6 pb-20 pt-10 w-full">
         <div className="max-w-5xl w-full mx-auto">
-          <h1 className="font-['Poppins'] font-bold text-[30px] sm:text-3xl md:text-[40px] text-white leading-tight mb-4">
+          <h1 className="font-['Poppins'] font-bold text-[30px] sm:text-3xl md:text-[40px] text-[#1a7997] leading-tight mb-4">
             Philippines' Digital Marketing Company that Creates Positive RIPPLE
             Effects.
           </h1>
-          <p className="font-['Inter'] text-sm sm:text-base md:text-lg text-white max-w-lg mx-auto mb-10 leading-relaxed">
+          <p className="font-['Inter'] text-sm sm:text-base md:text-lg text-[#1a7997] max-w-lg mx-auto mb-10 leading-relaxed">
             It is where the HEARTS of organizations and their clients are CONNECTED. 
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
@@ -41,7 +41,7 @@ function Hero() {
               Explore Services →
             </Link>
             <Link to="/contacts"
-              className="border border-white rounded-full h-[44px] px-7 flex items-center font-['Nunito'] font-medium text-base text-white hover:bg-white/10 transition-colors"
+              className="bg-[#0891b2] rounded-full h-[44px] px-7 flex items-center font-['Nunito'] font-medium text-base text-white"
             >
               Get Started
             </Link>
