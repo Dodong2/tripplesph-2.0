@@ -12,7 +12,7 @@ import Articleimage from '../assets/article-sample.png'
 // services images
 import Content from '../assets/services/content-sample.webp'
 import DigitalImage from '../assets/services/digital-marketing.webp'
-import AVP from '../assets/services/avp.jpg'
+import AVP from '../assets/services/avp.webp'
 import Train from '../assets/services/train.webp'
 import CPC from '../assets/services/cpc.webp'
 import Web from '../assets/services/web.webp'
