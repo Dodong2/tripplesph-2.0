@@ -120,6 +120,7 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Service", page: "services" },
   { label: "Blog", page: "blog" },
   { label: "Contacts", page: "contacts" },
+  { label: "Portfolio", link: "https://portfolio.tripplesdigital.com" }
 ];
 
 // ─── Footer ───────────────────────────────────────────────────────────────────

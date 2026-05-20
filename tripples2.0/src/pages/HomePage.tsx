@@ -40,7 +40,7 @@ function Hero() {
             >
               Explore Services →
             </Link>
-            <Link to="https://enthusiastic-red-goat.18-136-157-239.cpanel.site"
+            <Link to="/contacts"
               className="bg-[#0891b2] rounded-full h-[44px] px-7 flex items-center font-['Nunito'] font-medium text-base text-white"
             >
               Get Started

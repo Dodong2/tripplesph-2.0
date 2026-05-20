@@ -18,6 +18,7 @@ const pageToPath: Record<PageId, string> = {
   services: "/services",
   blog: "/blog",
   contacts: "/contacts",
+  portfolio: ""
 };
 
 export default function Navbar() {
@@ -36,20 +37,33 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <ul className="hidden md:flex items-center gap-7">
-            {NAV_LINKS.map(({ label, page }) => (
-              <li key={page}>
-                <Link
-                  to={pageToPath[page]}
-                  className={`font-['Poppins'] text-[15px] transition-colors whitespace-nowrap ${
-                    currentPage === page ? "text-[#00bbff]" : "text-black hover:text-[#197996]"
-                  }`}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+      <ul className="hidden md:flex items-center gap-7">
+  {NAV_LINKS.map(({ label, page, link }) => (
+    <li key={label}>
+      {link ? (
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-['Poppins'] text-[15px] transition-colors whitespace-nowrap text-black hover:text-[#197996]"
+        >
+          {label}
+        </a>
+      ) : (
+        <Link
+          to={pageToPath[page!]}
+          className={`font-['Poppins'] text-[15px] transition-colors whitespace-nowrap ${
+            currentPage === page
+              ? "text-[#00bbff]"
+              : "text-black hover:text-[#197996]"
+          }`}
+        >
+          {label}
+        </Link>
+      )}
+    </li>
+  ))}
+</ul>
 
           {/* Desktop actions */}
           <div className="hidden md:flex gap-2.5">
@@ -79,16 +93,33 @@ export default function Navbar() {
             menuOpen ? "max-h-[420px]" : "max-h-0"
           }`}
         >
-          {NAV_LINKS.map(({ label, page }) => (
-            <Link
-              key={page}
-              to={pageToPath[page]}
-              className={`block px-6 py-3.5 font-['Poppins'] text-base border-b border-gray-100 ${currentPage === page ? "text-[#00bbff]" : "text-black"}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              {label}
-            </Link>
-          ))}
+       {NAV_LINKS.map(({ label, page, link }) =>
+  link ? (
+    // external link
+    <a
+      key={label}
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block px-6 py-3.5 font-['Poppins'] text-base border-b border-gray-100 text-black"
+      onClick={() => setMenuOpen(false)}
+    >
+      {label}
+    </a>
+  ) : (
+    // internal navigation
+    <Link
+      key={page}
+      to={pageToPath[page!]}
+      className={`block px-6 py-3.5 font-['Poppins'] text-base border-b border-gray-100 ${
+        currentPage === page ? "text-[#00bbff]" : "text-black"
+      }`}
+      onClick={() => setMenuOpen(false)}
+    >
+      {label}
+    </Link>
+  )
+)}
           <div className="flex gap-2.5 px-6 py-3.5">
             <button className="flex-1 font-['Poppins'] text-base h-[38px] rounded-[7px] border border-[#1a7997] text-[#1a7997] bg-white cursor-pointer">Login</button>
             <button className="flex-1 font-['Poppins'] text-base h-[38px] rounded-[7px] text-white bg-[#1a7997] cursor-pointer">Sign Up</button>

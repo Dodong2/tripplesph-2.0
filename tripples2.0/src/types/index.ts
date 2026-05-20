@@ -1,11 +1,12 @@
 import type { LucideIcon } from "lucide-react";
 
 // ─── Navigation ─────────────────────────────────────────────────────────────
-export type PageId = "home" | "services" | "about" | "blog" | "contacts";
+export type PageId = "home" | "services" | "about" | "blog" | "contacts" | "portfolio";
 
 export interface NavLink {
   label: string;
-  page: PageId;
+  page?: PageId;
+  link?: string
 }
 
 // ─── Home Page ───────────────────────────────────────────────────────────────
