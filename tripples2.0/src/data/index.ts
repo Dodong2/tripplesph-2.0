@@ -143,7 +143,7 @@ export const FOOTER_NAV_LINKS: FooterNavLink[] = [
 
 export const FOOTER_CONTACT: FooterContact = {
   id: "fc1",
-  email:   "oliver.sison@tripplesph.com",
+  email:   "letustalk@tripplesph.com",
   phone:   "0921-508-6584 (Smart)",
   address: "11023 Downhill Drive Off Jose Velasco Ave. UPLB Batong Malake , Los Baños , Laguna 4030",
 };
