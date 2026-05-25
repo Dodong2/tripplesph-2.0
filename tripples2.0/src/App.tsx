@@ -11,6 +11,7 @@ const HomePage    = lazy(() => import("./pages/HomePage"));
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 const AboutPage   = lazy(() => import("./pages/AboutPage"));
 const BlogPage    = lazy(() => import("./pages/BlogPage"));
+const ArticlePage = lazy(() => import("./pages/ArticlePage"))
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 
 
@@ -24,7 +25,7 @@ function PageLoader() {
 
 export default function App() {
   return (
-    <BrowserRouter basename="/">
+    <BrowserRouter >
       {/* ScrollToTop must be inside BrowserRouter to access useLocation */}
       <ScrollToTop />
       <Navbar />
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/about"    element={<AboutPage />} />
             <Route path="/blog"     element={<BlogPage />} />
+            <Route path="/blog/:slug"  element={<ArticlePage />} />
             <Route path="/contacts" element={<ContactPage />} />
           </Routes>
         </Suspense>
