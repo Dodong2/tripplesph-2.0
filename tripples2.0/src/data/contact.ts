@@ -40,18 +40,18 @@ export const CONTACT_INFO: ContactInfoItem[] = [
     id: "ci1",
     icon: Mail,
     label: "Email",
-    lines: ["info@tripplsph.com", "support@tripplesph.com"],
+    lines: [" letustalk@tripplesph.com"],
   },
   {
     id: "ci2",
     icon: Phone,
     label: "Phone",
-    lines: ["+63 (2) 1234-5678 (General)", "+63 (2) 9876-5432 (Sales)"],
+    lines: ["+639215086592", "+639167664996"],
   },
   {
     id: "ci3",
     icon: MapPin,
     label: "Office",
-    lines: ["123 Ripple Avenue", "Calamba, Laguna, Philippines"],
+    lines: ["11023 Downhill Drive", "UPLB"],
   },
 ];

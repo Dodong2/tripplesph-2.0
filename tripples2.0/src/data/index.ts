@@ -131,7 +131,7 @@ export const FOOTER_SOCIAL_LINKS: FooterSocialLink[] = [
   { id: "fs1", label: "Tripples",          url: "https://facebook.com/TRipplesPH",         platform: "facebook" },
   { id: "fs2", label: "TripplesPH",        url: "https://facebook.com/TrippPH",       platform: "facebook" },
   { id: "fs3", label: "Positive Tripples", url: "https://www.facebook.com/OfficialTRipples", platform: "facebook" },
-  { id: "fs4", label: "Tripples PH",       url: "https://www.youtube.com/@tripplesph5736",       platform: "youtube"  },
+  { id: "fs4", label: "Tripples PH",       url: "https://www.youtube.com/@TRipplesPH_Digital",       platform: "youtube"  },
 ];
 
 export const FOOTER_NAV_LINKS: FooterNavLink[] = [
