@@ -2,6 +2,7 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./routes/ProtectedRoute"
 import RoleDirect from "./routes/RoleRedirect"
+import { AppLayout } from './components/layout/AppLayout'
 import Home from "./pages/Home"
 import Dashboard from "./pages/admin/Dashboard"
 import WriterDashboard from "./pages/writer/WriterDashboard"
@@ -32,6 +33,9 @@ function App() {
           </ProtectedRoute>
           }/>
         
+        <Route element={
+          <AppLayout/>
+        }>
         {/* ── WRITER ONLY ──────────────────────────────── */}
         <Route path="/writer" element={
           <ProtectedRoute allowedRoles={["writer"]}>
@@ -75,6 +79,7 @@ function App() {
             <TrashBin/>
           </ProtectedRoute>
         }/>
+        </Route>
 
       </Routes>
     </BrowserRouter>

@@ -6,8 +6,8 @@ import { useCancelArtcle } from "../mutations/useCancelArtcle"
 import toast from 'react-hot-toast'
 
 export const useWriterDashboard = () => {
-    const [searchInput, setSearchInput] = useState('')
-    const [activeSearch, setActiveSearch] = useState('')
+    const [page, setPage] = useState(1)
+    const [search, setSearch] = useState('')
     const [statusFilter, setStatusFilter] = useState('')
     const [tagFilter, setTagFilter] = useState('')
 
@@ -25,13 +25,11 @@ export const useWriterDashboard = () => {
         })
     }
 
-    const handleSearch = () => setActiveSearch(searchInput)
+    const handleSearch = (value: string) => {
+        setSearch(value)
+        setPage(1)
+    } 
 
-    const handleClear = () => {
-        setSearchInput('')
-        setActiveSearch('')
-        setTagFilter('')
-    }
 
     const handleCancelSubmission = async (id: string) => {
                 await toast.promise(
@@ -45,14 +43,12 @@ export const useWriterDashboard = () => {
             }
 
     return {
+        page, setPage,
         TAGS, STATUS_OPTIONS,
-        searchInput, setSearchInput,
-        activeSearch,
         statusFilter, setStatusFilter,
         tagFilter, setTagFilter,
         handleDelete, isDeleting,
-        handleSearch,
-        handleClear,
+        search, handleSearch,
         handleCancelSubmission,
         isCancelling
     }

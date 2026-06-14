@@ -12,6 +12,7 @@ import type { User, Role, RoleCount, Article } from "../../types/index.types"
 import { useNavigate } from "react-router-dom"
 import { TAGS } from "../../constants/article.constants"
 import { toast } from "react-hot-toast"
+import { SearchBar } from "../../components/common/SearchBar"
 
 const Dashboard = () => {
     const [tagFilter, setTagFilter] = useState('')
@@ -121,11 +122,11 @@ const Dashboard = () => {
             <br />
 
 
-            <input type="text" placeholder="Search users" value={search} onChange={(e) => {
-                handleSearchChange(e.target.value)
-                setPage(1)
-            }
-            } />
+            <SearchBar 
+                onSearch={handleSearchChange}
+                placeholder="Search users..."
+                externalValue={search}
+            />
 
             <select value={roleFilter} onChange={(e) => {
                 handleRoleFilterChange(e.target.value)

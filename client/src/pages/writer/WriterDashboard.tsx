@@ -1,25 +1,29 @@
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { signOut } from "../../services/auth.service"
 import { useAuth } from "../../hooks/useAuth"
 import { useGetArticles } from "../../hooks/article/queries/useGetArticles"
 import { useGetMyArticles } from "../../hooks/article/queries/useGetMyArticles"
 import { useWriterDashboard } from "../../hooks/article/ui/useWriterDashboard"
 import type { Article } from "../../types/index.types"
 // components
-import { Button } from "../../components/ui/Button"
+import { SearchBar } from "../../components/common/SearchBar"
+import { DraftIcon, IconPlus, IconSearch, MyArticlesIcon, PublishedIcon, ScheduleIcon } from "../../components/ui/Icons"
+import { StatCard } from "../../components/ui/StatsCard"
+import { ArticleCard } from "../../components/common/ArticleCard"
+import { FilterDropdown } from "../../components/ui/FilterDropdown"
 
 const WriterDashboard = () => {
     const { user } = useAuth()
     const navigate = useNavigate()
+    const [activeTab, setActiveTab] = useState<"my" | "others">("my")
+
     const {
+        page, setPage,
         TAGS, STATUS_OPTIONS,
-        searchInput, setSearchInput,
-        activeSearch,
         statusFilter, setStatusFilter,
         tagFilter, setTagFilter,
         handleDelete, isDeleting,
-        handleSearch,
-        handleClear,
+        search, handleSearch,
         handleCancelSubmission,
         isCancelling
     } = useWriterDashboard()
@@ -30,7 +34,7 @@ const WriterDashboard = () => {
         fetchNextPage: fetchMoreMine,
         hasNextPage: hasMoreMine
     } = useGetMyArticles({
-        search: activeSearch || undefined,
+        search,
         status: statusFilter || undefined
     })
 
@@ -44,183 +48,144 @@ const WriterDashboard = () => {
     const admin = user?.role === 'admin'
     const super_admin = user?.role === 'super_admin'
 
+    const myArticles = myData?.pages.flatMap(p => p.data) ?? []
+    const allArticles = allData?.pages.flatMap(p => p.data) ?? []
+
+    const totalPosts = myArticles.length
+    const publishedCount = myArticles.filter(a => a.status === "PUBLISHED").length
+    const scheduledCount = myArticles.filter(a => a.status === "SCHEDULED").length
+    const draftCount = myArticles.filter(a => a.status === "DRAFT").length
+
+
+
     return (
-        <div>
-            <h1>Writer Dashboard</h1>
-            <p>Welcome, {user?.name}</p>
-            <p>Role: {user?.role}</p>
-            <Button onClick={signOut} variant="primary">Sign out</Button>
-            <Button onClick={() => navigate('/writer/create')} variant="secondary">+ Create Article</Button>
+        <div className="min-h-screen bg-[#f1f2f4] font-[Inter,sans-serif]">
+ 
 
-            <h2>My Articles</h2>
+            <main className="flex-1 px-6 py-5 min-h-screen">
 
-            <div>
-                <input type="text"
-                    placeholder="Search my articles..."
-                    value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                />
-                <button onClick={handleSearch}>Search</button>
-
-                {/* Status filter buttons */}
-                <span style={{ marginLeft: '10px' }}>
-                    <button
-                        onClick={() => setStatusFilter('')}
-                        style={{ fontWeight: !statusFilter ? 'bold' : 'normal' }}>
-                        ALL
-                    </button>
-                    {STATUS_OPTIONS.map(s => (
+                {activeTab === "my" && (
+                    <div className="flex justify-between items-start mb-4">
+                        <div>
+                            <h1 className="m-0 font-[Poppins,sans-serif] font-bold text-[32px] text-[#111]">
+                                Article Management
+                            </h1>
+                            <p className="mt-1 mb-0 text-[15px] text-[#111]">
+                                Manage your articles and explore community content
+                            </p>
+                        </div>
                         <button
-                            key={s}
-                            onClick={() => setStatusFilter(s)}
-                            style={{ fontWeight: statusFilter === s ? 'bold' : 'normal' }}>
-                            {s}
+                            onClick={() => navigate("/writer/create")}
+                            className="flex items-center gap-2 px-[18px] py-2 bg-gradient-to-br from-[#07d5ee] to-[#00a6ba] text-white border-none rounded-[6px] text-base font-semibold cursor-pointer whitespace-nowrap"
+                        >
+                            <IconPlus /> Add new post
                         </button>
-
-                    ))}
-                </span>
-
-                {activeSearch && (
-                    <button onClick={handleClear}>Clear</button>
+                    </div>
                 )}
-            </div>
 
-            {myLoading && <p>Loading...</p>}
 
-            <table border={1} cellPadding={8} cellSpacing={0}>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Status</th>
-                        <th>Approval</th>
-                        <th>Published</th>
-                        <th>Tags</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {myData?.pages.flatMap(p => p.data).length === 0 ? (
-                        <tr><td colSpan={5}>No articles found</td></tr>
-                    ) : (
-                        myData?.pages.flatMap(p => p.data).map((article: Article) => {
-                            const isPending = article.approvalStatus === 'PENDING'
-                            const isApproved = article.approvalStatus === 'APPROVED'
-                            const isRejected = article.approvalStatus === 'REJECTED'
-                            // const isNone = article.approvalStatus === 'NONE'
-                            const isPublished = article.status === 'PUBLISHED'
 
-                            return (
-                            <tr key={article.id}>
-                                <td>{article.title}</td>
-                                <td>{article.status}</td>
+                {activeTab === "my" && (
+                    <>
+                        {/* Stats */}
+                        <div className="flex gap-3 mb-4">
+                            <StatCard label="My Posts" value={totalPosts} icon={<MyArticlesIcon />} />
+                            <StatCard label="Published" value={publishedCount} icon={<PublishedIcon />} />
+                            <StatCard label="Schedule" value={scheduledCount} icon={<ScheduleIcon />} />
+                            <StatCard label="Draft" value={draftCount} icon={<DraftIcon />} />
+                        </div>
 
-                                {/* ── Approval status column ── */}
-                                <td>
-                                    {isPending && <span style={{ color: 'orange' }}>⏳ Pending</span>}
-                                    {isApproved && !isPublished && <span style={{ color: 'teal' }}>✓ Approved</span>}
-                                    {isApproved && isPublished && <span style={{ color: 'green' }}>✓ Published</span>}
-                                    {isRejected && (
-                                        <span style={{ color: 'red' }}>
-                                            ✗ Rejected
-                                            {article.rejectionReason && (
-                                                <span style={{ fontSize: '11px', display: 'block' }}>
-                                                    {article.rejectionReason}
-                                                </span>
-                                            )}
-                                        </span>
-                                    )}
-                                </td>
+                        {/* Search + filters */}
+                        <div className="bg-white rounded-[18px] p-5 shadow-[0_4px_8px_2px_rgba(0,0,0,0.08)] mb-3">
+                            <div className="flex gap-3 items-center">
+                                {/* Search */}
+                                <SearchBar 
+                                    onSearch={handleSearch}
+                                    placeholder="Search articles..."
+                                    externalValue={search}
+                                />
+                                {/* Status filter */}
+                                <FilterDropdown label="status" value={statusFilter} onChange={setStatusFilter} options={STATUS_OPTIONS.map(status => ({
+                                    label: status,
+                                    value: status
+                                }))} />
+                            </div>
+                        </div>
 
-                                <td>{article.publishedAt
-                                    ? new Date(article.publishedAt).toLocaleDateString()
-                                    : '—'}
-                                </td>
-                                <td>{article.tags?.map(t => t.tag).join(', ') ?? '—'}</td>
+                        {/* Articles list */}
+                        {myLoading && <p className="text-[#6c6c6c] text-sm">Loading...</p>}
+                        {myArticles.length === 0 && !myLoading && (
+                            <div className="bg-white rounded-[18px] p-10 text-center shadow-[0_4px_8px_2px_rgba(0,0,0,0.08)]">
+                                <p className="text-[#6c6c6c] m-0">No articles found. Start writing!</p>
+                            </div>
+                        )}
+                        {myArticles.map((article: Article) => (
+                            <ArticleCard
+                                key={article.id}
+                                article={article}
+                                showActions
+                                onView={() => navigate(`/writer/edit/${article.id}`)}
+                                onCancel={() => handleCancelSubmission(article.id)}
+                                isCancelling={isCancelling}
+                            />
+                        ))}
+                        {hasMoreMine && (
+                            <button
+                                onClick={() => fetchMoreMine()}
+                                className="btn-ghost mt-2"
+                            >
+                                Load More
+                            </button>
+                        )}
+                    </>
+                )}
 
-                                 {/* ── Actions column ── */}
-                                <td>
-                                    {isPending && (
-                                    <Button
-                                        onClick={() => handleCancelSubmission(article.id)}
-                                        disabled={isCancelling} variant="primary"
+
+
+                {activeTab === "others" && (
+                    <>
+                        {/* Search + filters */}
+                        <div className="bg-white rounded-[18px] p-5 shadow-[0_4px_8px_2px_rgba(0,0,0,0.08)] mb-3">
+                            <div className="flex gap-3 items-center">
+                                <div className="flex-1 bg-[#f3f3f5] rounded-[10px] px-4 py-3 flex items-center gap-2.5">
+                                    <IconSearch />
+                                    <input
+                                        placeholder="Search posts..."
+                                        className="border-none bg-transparent flex-1 text-[13px] text-[#111] outline-none"
+                                    />
+                                </div>
+                                <FilterDropdown label="tags" value={tagFilter} onChange={setTagFilter} options={TAGS.map(tag => ({
+                                    label: tag,
+                                    value: tag
+                                }))} />
+                                {/* <div className="bg-[#f3f3f5] rounded-[10px] px-4 py-3 flex items-center gap-2 min-w-[160px]">
+                                    <select
+                                        value={tagFilter}
+                                        onChange={e => setTagFilter(e.target.value)}
+                                        className="border-none bg-transparent text-[13px] font-medium text-[#111] outline-none cursor-pointer appearance-none w-full"
                                     >
-                                        {isCancelling ? '...' : 'Cancel Submission'}
-                                    </Button>
-                                    )}
-                                    
-                                    {!isPending && (
-                                    <Button onClick={() => navigate(`/writer/edit/${article.id}`)} variant="primary">
-                                        View
-                                    </Button>
-                                    )}
+                                        <option value="">All Categories</option>
+                                        {TAGS.map(t => <option key={t} value={t}>{t}</option>)}
+                                    </select>
+                                    <IconChevron />
+                                </div> */}
+                            </div>
+                        </div>
 
-                                    {admin && super_admin && (
-                                        <Button
-                                            onClick={() => handleDelete(article.id)}
-                                            disabled={isDeleting} variant="primary"
-                                        >
-                                            Delete
-                                        </Button>
+                        {/* Articles */}
+                        {allLoading && <p className="text-[#6c6c6c] text-sm">Loading...</p>}
+                        {allArticles.map((article: Article) => (
+                            <ArticleCard key={article.id} article={article} />
+                        ))}
+                        {hasMoreAll && (
+                            <button onClick={() => fetchMoreAll()} className="btn-ghost mt-2">
+                                Load More
+                            </button>
+                        )}
+                    </>
+                )}
 
-                                    )}
-
-                                </td>
-                            </tr>
-                        )}))}
-                </tbody>
-            </table>
-
-            {hasMoreMine && (
-                <button onClick={() => fetchMoreMine()}>Load More</button>
-            )}
-
-
-            <h2>All Published Articles</h2>
-
-            <div>
-                <button
-                    onClick={() => setTagFilter('')}
-                    style={{ fontWeight: !tagFilter ? 'bold' : 'normal' }}
-                >
-                    All Tags
-                </button>
-                {TAGS.map(tag => (
-                    <button key={tag} onClick={() => setTagFilter(tag)}
-                        style={{ fontWeight: tagFilter === tag ? 'bold' : 'normal' }}>
-                        {tag}
-                    </button>
-                ))}
-            </div>
-
-            {allLoading && <p>Loading...</p>}
-
-            <table border={1} cellPadding={8} cellSpacing={0}>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Published</th>
-                        <th>Tags</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {allData?.pages.flatMap(p => p.data).map((article: Article) => (
-                        <tr key={article.id}>
-                            <td>{article.title}</td>
-                            <td>{article.author.name ?? '—'}</td>
-                            <td>{article.publishedAt
-                                ? new Date(article.publishedAt).toLocaleDateString()
-                                : '—'}
-                            </td>
-                            <td>{article.tags?.map(t => t.tag).join(', ') ?? '—'}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            {hasMoreAll && (
-                <button onClick={() => fetchMoreAll()}>Load More</button>
-            )}
+            </main>
         </div>
     )
 }
