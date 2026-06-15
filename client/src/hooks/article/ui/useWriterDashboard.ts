@@ -6,7 +6,6 @@ import { useCancelArtcle } from "../mutations/useCancelArtcle"
 import toast from 'react-hot-toast'
 
 export const useWriterDashboard = () => {
-    const [page, setPage] = useState(1)
     const [search, setSearch] = useState('')
     const [statusFilter, setStatusFilter] = useState('')
     const [tagFilter, setTagFilter] = useState('')
@@ -27,7 +26,6 @@ export const useWriterDashboard = () => {
 
     const handleSearch = (value: string) => {
         setSearch(value)
-        setPage(1)
     } 
 
 
@@ -43,7 +41,6 @@ export const useWriterDashboard = () => {
             }
 
     return {
-        page, setPage,
         TAGS, STATUS_OPTIONS,
         statusFilter, setStatusFilter,
         tagFilter, setTagFilter,

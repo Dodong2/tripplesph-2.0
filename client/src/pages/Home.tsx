@@ -1,39 +1,37 @@
-import Login from "./Login"
-import { useNavigate } from "react-router-dom"
-import { useGetArticles } from "../hooks/article/queries/useGetArticles"
-import type { Article } from "../types/article.types"
+import Login from "./Login";
+import { useNavigate } from "react-router-dom";
+import { useGetArticles } from "../hooks/article/queries/useGetArticles";
+import type { Article } from "../types/article.types";
 
 const Home = () => {
-    const navigate = useNavigate()
-    const { 
+    const navigate = useNavigate();
+    const {
         data: allArticles,
         isLoading: allLoading,
         fetchNextPage: fetchMoreAll,
-        hasNextPage: hasMoreAll
-     } = useGetArticles()
+        hasNextPage: hasMoreAll,
+    } = useGetArticles();
 
     return (
         <div>
-            <h1>TripplesPH</h1>
-            <p>Welcome to TripplesPH</p>
+            <Login />
             <a href="/blogs">Read Articles</a>
-            <Login/>
-
             {allLoading && <p>Loading article...</p>}
-            {allArticles?.pages.flatMap(p => p.data).map((article: Article) => (
-                <div key={article.id}>
-                    <p
-                        style={{ cursor: 'pointer', color: 'blue' }}
-                        onClick={() => navigate(`/articles/${article.id}`)}
-                    >{article.title}</p>
-                </div>
-            ))}
-
-            {hasMoreAll && (
-                <button onClick={() => fetchMoreAll()}>Load More</button>
-            )}
+            {allArticles?.pages
+                .flatMap((p) => p.data)
+                .map((article: Article) => (
+                    <div key={article.id}>
+                        <p
+                            style={{ cursor: "pointer", color: "blue" }}
+                            onClick={() => navigate(`/articles/${article.id}`)}
+                        >
+                            {article.title}
+                        </p>
+                    </div>
+                ))}
+            {hasMoreAll && <button onClick={() => fetchMoreAll()}>Load More</button>}
         </div>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;

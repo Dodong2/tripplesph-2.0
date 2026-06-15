@@ -18,11 +18,9 @@ const WriterDashboard = () => {
     const [activeTab, setActiveTab] = useState<"my" | "others">("my")
 
     const {
-        page, setPage,
         TAGS, STATUS_OPTIONS,
         statusFilter, setStatusFilter,
         tagFilter, setTagFilter,
-        handleDelete, isDeleting,
         search, handleSearch,
         handleCancelSubmission,
         isCancelling
@@ -158,17 +156,6 @@ const WriterDashboard = () => {
                                     label: tag,
                                     value: tag
                                 }))} />
-                                {/* <div className="bg-[#f3f3f5] rounded-[10px] px-4 py-3 flex items-center gap-2 min-w-[160px]">
-                                    <select
-                                        value={tagFilter}
-                                        onChange={e => setTagFilter(e.target.value)}
-                                        className="border-none bg-transparent text-[13px] font-medium text-[#111] outline-none cursor-pointer appearance-none w-full"
-                                    >
-                                        <option value="">All Categories</option>
-                                        {TAGS.map(t => <option key={t} value={t}>{t}</option>)}
-                                    </select>
-                                    <IconChevron />
-                                </div> */}
                             </div>
                         </div>
 
