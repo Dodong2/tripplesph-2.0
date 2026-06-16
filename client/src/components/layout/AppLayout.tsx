@@ -17,18 +17,20 @@ export const AppLayout = () => {
   const sidebarItemsByRole: Record<string, { href: string; icon: ReactNode; text: string }[]> = {
     writer: [
       { href: "/writer", icon: <IconMyArticles />, text: "My Articles" },
-      { href: "/writer/create", icon: <IconOtherArticles />, text: "Create Article" },
+      { href: "/writer/all", icon: <IconOtherArticles />, text: "All Articles" },
     ],
     admin: [
       { href: "/admin", icon: <IconDashboard />, text: "Dashboard" },
       { href: "/admin/approvals", icon: <IconMyArticles />, text: "Approvals" },
       { href: "/admin/monitoring", icon: <IconUsers />, text: "Monitoring" },
+      { href: "/writer/all", icon: <IconOtherArticles />, text: "All Articles" },
       { href: "/admin/trash", icon: <IconOtherArticles />, text: "Trash Bin" },
     ],
     super_admin: [
       { href: "/admin", icon: <IconDashboard />, text: "Dashboard" },
       { href: "/admin/approvals", icon: <IconMyArticles />, text: "Approvals" },
       { href: "/admin/monitoring", icon: <IconUsers />, text: "Monitoring" },
+      { href: "/writer/all", icon: <IconOtherArticles />, text: "All Articles" },
       { href: "/admin/trash", icon: <IconOtherArticles />, text: "Trash Bin" },
     ],
     user: [

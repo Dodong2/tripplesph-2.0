@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getMyArticles } from "../../../services/article.service";
-import type { CursorBasedParams } from "../../../types/pagination.types";
+import type { CursorBasedParams } from "../../../types/index.types";
 
 export const useGetMyArticles = (params: CursorBasedParams = {}) => {
     return useInfiniteQuery({

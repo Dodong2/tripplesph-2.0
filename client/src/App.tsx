@@ -6,6 +6,7 @@ import { AppLayout } from './components/layout/AppLayout'
 import Home from "./pages/Home"
 import Dashboard from "./pages/admin/Dashboard"
 import WriterDashboard from "./pages/writer/WriterDashboard"
+import AllArticles from './pages/article/AllArticles'
 import Unauthorized from "./pages/Unauthorized"
 import CreateArticle from "./pages/article/CreateArticle"
 import UpdateArticle from "./pages/article/UpdateArticle"
@@ -36,13 +37,20 @@ function App() {
         <Route element={
           <AppLayout/>
         }>
+          {/* ── FOR ALL ROLES ──────────────────────────────── */}
+        <Route path="/writer/all" element={
+          <ProtectedRoute allowedRoles={["user","writer", "admin", "super_admin"]}>
+            <AllArticles/>
+          </ProtectedRoute>
+        }/>
+
         {/* ── WRITER ONLY ──────────────────────────────── */}
         <Route path="/writer" element={
           <ProtectedRoute allowedRoles={["writer"]}>
             <WriterDashboard />
           </ProtectedRoute>
         } />
-        
+
         <Route path="/writer/create" element={
           <ProtectedRoute allowedRoles={["writer", "admin", "super_admin"]}>
             <CreateArticle/>
