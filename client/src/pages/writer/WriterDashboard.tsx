@@ -8,6 +8,8 @@ import { DraftIcon, IconPlus, MyArticlesIcon, PublishedIcon, ScheduleIcon } from
 import { StatCard } from "../../components/ui/StatsCard"
 import { ArticleCard } from "../../components/common/ArticleCard"
 import { FilterDropdown } from "../../components/ui/FilterDropdown"
+// assets
+import NoResult from "../../assets/no-result.png"
 
 const WriterDashboard = () => {
     const navigate = useNavigate()
@@ -75,7 +77,7 @@ const WriterDashboard = () => {
                         {/* Search */}
                         <SearchBar
                             onSearch={handleSearch}
-                            placeholder="Search articles..."
+                            placeholder="your articles..."
                             externalValue={search}
                         />
                         {/* Status filter */}
@@ -89,7 +91,8 @@ const WriterDashboard = () => {
                 {/* Articles list */}
                 {myLoading && <p className="text-[#6c6c6c] text-sm">Loading...</p>}
                 {myArticles.length === 0 && !myLoading && (
-                    <div className="bg-white rounded-[18px] p-10 text-center shadow-[0_4px_8px_2px_rgba(0,0,0,0.08)]">
+                    <div className="flex flex-col justify-center items-center bg-white rounded-[18px] p-10 text-center shadow-[0_4px_8px_2px_rgba(0,0,0,0.08)]">
+                        <img src={NoResult} alt="no-result" className="h-40 w-40"/>
                         <p className="text-[#6c6c6c] m-0">No articles found. Start writing!</p>
                     </div>
                 )}

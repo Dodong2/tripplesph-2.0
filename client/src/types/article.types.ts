@@ -5,7 +5,10 @@ export type ArticleStatus = "DRAFT" | "PUBLISHED" | "SCHEDULED"
 export type ArticleTag =
     | "FACT" | "FAD" | "FAITH" | "FAMILY" | "FASHION"
     | "FILM" | "FLORA_AND_FAUNA" | "FOOD_FORTUNE"
-    | "FUN" | "FUTURE" | "NEWS" | "UNCATEGORIZED"
+    | "FUN" | "FUTURE" | "NEWS" | "UNCATEGORIZED" 
+    | "UNCATEGORIZED" | "DIGITAL_COMMUNICATION" 
+    | "MODERN_STORYTELLING" | "AUDIENCE_BEHAVIOR" 
+    | "VISUAL_STORYTELLING" | "TRENDS"
 
 export type approvalStatus = "NONE" | "PENDING" | "APPROVED" | "REJECTED"
 
@@ -33,7 +36,7 @@ export interface Article {
     rejectionReason?: string | null
     approvedBy?: string | null
     approvedAt?: string | null
-    
+
     createdAt: string
     updatedAt: string
 
@@ -55,10 +58,10 @@ export interface CreateArticleInput {
     coverImage?: string
 }
 
-export interface UpdateArticleInput extends Partial<CreateArticleInput> {}
+export interface UpdateArticleInput extends Partial<CreateArticleInput> { }
 
 export interface ArticleEngagementCounts {
     reactions: number
-    shares: number 
+    shares: number
     views: number
 }

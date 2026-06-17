@@ -7,6 +7,8 @@ import type { Article } from "../../types/index.types"
 import { ArticleCard } from "../../components/common/ArticleCard"
 import { FilterDropdown } from "../../components/ui/FilterDropdown"
 import { SearchBar } from "../../components/common/SearchBar"
+// assets
+import NoResult from "../../assets/no-result.png"
 
 const AllArticles = () => {
   const [query, setQuery] = useState("")
@@ -46,7 +48,7 @@ const AllArticles = () => {
           <div className="flex gap-3 items-center">
             <SearchBar
               onSearch={(val) => setQuery(val)}
-              placeholder="Search articles..."
+              placeholder="search articles..."
               externalValue={query}
             />
             {/* Tag filter — hide kapag nag-search para hindi magsalaban */}
@@ -70,7 +72,8 @@ const AllArticles = () => {
 
         {/* Empty state */}
         {!loading && articles.length === 0 && (
-          <div className="bg-white rounded-[18px] p-10 text-center shadow-[0_4px_8px_2px_rgba(0,0,0,0.08)]">
+          <div className="flex flex-col justify-center items-center bg-white rounded-[18px] p-10 text-center shadow-[0_4px_8px_2px_rgba(0,0,0,0.08)]">
+            <img src={NoResult} alt="no-result" className="h-40 w-40"/>
             <p className="text-[#6c6c6c] m-0">
               {isSearchMode
                 ? `No results for "${query}"`
