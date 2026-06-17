@@ -415,6 +415,7 @@ export const getMyArticles = async (req: Request, res: Response, next: NextFunct
             const articles = await prisma.article.findMany({
                 where: { 
                     authorId: req.user!.id,
+                    isArchived: false,
                     ...(validStatus && { status: validStatus }),
                     ...(search && {
                         OR: [
@@ -463,6 +464,7 @@ export const searchArticles = async (req: Request, res: Response, next: NextFunc
             const articles = await prisma.article.findMany({
                 where: {
                         status: 'PUBLISHED',
+                        isArchived: false,
                         OR: [
                             { title: { contains: q, mode: 'insensitive'} },
                             { subtitle: { contains: q, mode: 'insensitive' } },
