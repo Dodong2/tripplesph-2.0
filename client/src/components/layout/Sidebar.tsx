@@ -3,6 +3,7 @@ import { useLocation, Link } from "react-router-dom"
 import type { ReactNode } from "react"
 import { IconLogout } from "../ui/Icons"
 import { signOut } from "../../services/auth.service"
+import { IconPen } from "../ui/Icons"
 
 interface SidebarItem {
   href: string
@@ -36,13 +37,10 @@ export const Sidebar = ({ items, user }: SidebarProps) => (
     {/* Logo */}
     <div className="px-[25px] pt-5 flex items-center gap-2.5">
       <div className="bg-white rounded-[10px] w-[41px] h-[41px] flex items-center justify-center shrink-0">
-        <svg width="27" height="27" viewBox="0 0 27 27" fill="none">
-          <circle cx="13.5" cy="13.5" r="12" fill="#197996" stroke="white" strokeWidth="1.5" />
-          <path d="M8 14l3.5 3.5L19 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <IconPen/>
       </div>
       <div>
-        <p className="m-0 font-semibold text-xl text-white">Writer Portal</p>
+        <p className="m-0 font-semibold text-xl text-white">Blog's Portal</p>
         <p className="m-0 text-[11px] text-[#74bbcb]">TRiPPLeS</p>
       </div>
     </div>

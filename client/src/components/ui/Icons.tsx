@@ -18,6 +18,7 @@ import { MdEmail, MdLock, MdArrowBack } from 'react-icons/md'
 import { FcGoogle } from 'react-icons/fc'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import { FiTrendingUp } from "react-icons/fi";
+import { LuPenTool } from "react-icons/lu";
 
 // ── Login ────────────────────────────────────────────
 export const IconLoginChart = () => (
@@ -115,6 +116,10 @@ export const IconDashboard = () => (
 )
 export const IconUsers = () => (
   <FaUsers size={20}/>
+)
+
+export const IconPen = () => (
+  <LuPenTool size={30} color="#197996"/>
 )
 
 // ── SEARCH BAR ────────────────────────────────────────────

@@ -4,15 +4,17 @@ import { useWriterDashboard } from "../../hooks/article/ui/useWriterDashboard"
 import { useSearchArticles } from "../../hooks/article/queries/useSearchArticles"
 import type { Article } from "../../types/index.types"
 // components
-import { ArticleCard } from "../../components/common/ArticleCard"
-import { FilterDropdown } from "../../components/ui/FilterDropdown"
 import { SearchBar } from "../../components/common/SearchBar"
+import { TagFilter } from "../../components/ui/TagFilter"
 // assets
 import NoResult from "../../assets/no-result.png"
+import { ArticleGridCard } from "../../components/article/ArticleGridCard"
 
 const AllArticles = () => {
   const [query, setQuery] = useState("")
   const { TAGS, tagFilter, setTagFilter } = useWriterDashboard()
+  const [showTags, setShowTags] =
+    useState(false)
 
   const {
     data: allData,
@@ -44,23 +46,48 @@ const AllArticles = () => {
       <main className="flex-1 px-6 py-5 min-h-screen">
 
         {/* Search + filters */}
-        <div className="bg-white rounded-[18px] p-5 shadow-[0_4px_8px_2px_rgba(0,0,0,0.08)] mb-3">
-          <div className="flex gap-3 items-center">
+        <div
+          className="
+    bg-white
+    rounded-[18px]
+    p-5
+    shadow-[0_4px_8px_2px_rgba(0,0,0,0.08)]
+    mb-6
+  "
+        >
+          <div className="flex flex-wrap gap-3">
             <SearchBar
-              onSearch={(val) => setQuery(val)}
-              placeholder="search articles..."
+              onSearch={setQuery}
+              placeholder="Search articles..."
               externalValue={query}
             />
-            {/* Tag filter — hide kapag nag-search para hindi magsalaban */}
-            {!isSearchMode && (
-              <FilterDropdown
-                label="tags"
-                value={tagFilter}
-                onChange={setTagFilter}
-                options={TAGS.map(tag => ({ label: tag, value: tag }))}
-              />
-            )}
+
+            <button
+              onClick={() =>
+                setShowTags(prev => !prev)
+              }
+              className="
+        h-11
+        px-5
+        rounded-xl
+        border
+        border-cyan-500
+        text-cyan-600
+      "
+            >
+              Tags
+            </button>
           </div>
+
+          {showTags && (
+            <div className="mt-4">
+              <TagFilter
+                tags={TAGS}
+                activeTag={tagFilter}
+                onChange={setTagFilter}
+              />
+            </div>
+          )}
         </div>
 
         {/* Loading */}
@@ -73,7 +100,7 @@ const AllArticles = () => {
         {/* Empty state */}
         {!loading && articles.length === 0 && (
           <div className="flex flex-col justify-center items-center bg-white rounded-[18px] p-10 text-center shadow-[0_4px_8px_2px_rgba(0,0,0,0.08)]">
-            <img src={NoResult} alt="no-result" className="h-40 w-40"/>
+            <img src={NoResult} alt="no-result" className="h-40 w-40" />
             <p className="text-[#6c6c6c] m-0">
               {isSearchMode
                 ? `No results for "${query}"`
@@ -83,9 +110,19 @@ const AllArticles = () => {
         )}
 
         {/* Articles — same component, iba lang ang source */}
-        {!loading && articles.map((article: Article) => (
-          <ArticleCard key={article.id} article={article} />
-        ))}
+        <div
+          className="
+    grid
+    grid-cols-1
+    md:grid-cols-2
+    xl:grid-cols-3
+    gap-6
+  "
+        >
+          {!loading && articles.map((article: Article) => (
+            <ArticleGridCard key={article.id} article={article} />
+          ))}
+        </div>
 
         {/* Load more — depende sa mode */}
         {isSearchMode ? (

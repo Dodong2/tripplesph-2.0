@@ -47,7 +47,7 @@ export const FilterDropdown = ({
         onClick={() => setOpen(!open)}
         className="
           h-11
-          min-w-[150px]
+          min-w-[250px]
           px-4
           rounded-xl
           border
