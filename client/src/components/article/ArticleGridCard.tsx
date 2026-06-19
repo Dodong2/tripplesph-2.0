@@ -1,7 +1,8 @@
 import type { Article } from "../../types/index.types"
+import { useNavigate } from "react-router-dom"
 import {
   IconCalendar,
-  IconViews,
+  IconAuthor,
 } from "../ui/Icons"
 
 import {
@@ -13,9 +14,8 @@ interface Props {
   article: Article
 }
 
-export const ArticleGridCard = ({
-  article,
-}: Props) => {
+export const ArticleGridCard = ({article}: Props) => {
+  const navigate = useNavigate()
   const thumbnail = getFirstImage(
     article.content
   )
@@ -111,8 +111,8 @@ export const ArticleGridCard = ({
           "
         >
           <div className="flex items-center gap-1">
-            <IconViews />
-            {article._count?.views}
+            <IconAuthor />
+            {article.author.name}
           </div>
 
           {article.publishedAt && (
@@ -136,6 +136,7 @@ export const ArticleGridCard = ({
             from-cyan-400
             to-cyan-600
           "
+          onClick={() => navigate(`/articles/${article.id}`)}
         >
           Read More
         </button>

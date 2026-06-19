@@ -18,7 +18,7 @@ export const BackButton = ({ fallbackPath, allowHistoryBack = false }: BackButto
     }
     
     return (
-    <Button onClick={handleBack} variant="secondary">
+    <Button onClick={handleBack}>
       ← Back
     </Button>
   )
